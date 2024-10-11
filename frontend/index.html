@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Alison Zou Portfolio - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/f3023ee973.js" crossorigin="anonymous"></script>
+</head>
+<body id="home">
+<div id="header">
+    <div class="container">
+
+        <nav>
+            <img src="images/logo.png" class="logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-text">
+            <p>UI/UX Designer</p>
+            <h1>Hi, I'm <span>Alison Zou</span><br> a sophomore</h1>
+        </div>
+
+    </div>
+</div>
+
+
+<!--------------about------------>
+<div id="about">
+    <div class="container">
+        <div class="row">
+            <div class="about-col-1">
+                <img src="images/user.JPG">
+            </div>
+            <div class="about-col-2">
+                <h1 class="sub-title">About me</h1>
+                <p>lorefeknfnorwnonvoqeiofj q3klgnklnknf
+                    ewkjbkjebvkjebvkj qqswaliojpri bcksdja
+                    qekwjbuo4 ;foj3qooihwqbdn linf2qlnq3;o
+                </p>
+
+                <div class="tab-titles">
+                    <p class="tab-links active-link" onclick="opentab('experience')">Experience</p>
+                    <p class="tab-links" onclick="opentab('skills')">Skills</p>
+                    <p class="tab-links" onclick="opentab('education')">Education</p>
+                </div>
+                <div class="tab-contents active-tab" id="experience">
+                    <ul>
+                        <li><span>VandyHacks</span><br>Designing Web/App interfaces</li>
+                        <li><span>Asian American Student Association</span><br>Designing Web/App interfaces</li>
+                        <li><span>VI4 AIR</span><br>Designing Web/App interfaces</li>
+                    </ul>
+                </div>
+
+                <div class="tab-contents" id="skills">
+                    <ul>
+                        <li><span>UI/UX</span><br>Designing Web/App interfaces</li>
+                        <li><span>Web Development</span><br>Designing Web/App interfaces</li>
+                        <li><span>App Development</span><br>Designing Web/App interfaces</li>
+                    </ul>
+                </div>
+
+                <div class="tab-contents" id="education">
+                    <ul>
+                        <li><span>2023-2027</span><br>Vanderblit University</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-----------projects----------->
+<div id="projects">
+    <div class="container">
+        <h1 class="sub-title">My projects</h1>
+        <div class="projects-list">
+            <div>
+                <i class="fa-solid fa-code"></i>
+                <h2>Web Design</h2>
+                <p>description of project</p>
+                <a href="#">learn more</a>
+            </div>
+            <div>
+                <i class="fa-solid fa-paintbrush"></i>
+                <h2>Cover Art</h2>
+                <p>description of project</p>
+                <a href="#">learn more</a>
+            </div>
+            <div>
+                <i class="fa-regular fa-object-group"></i>
+                <h2>UI/UX Design</h2>
+                <p>description of project</p>
+                <a href="#">learn more</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!----------portfolio--------------------->
+<div id="portfolio">
+    <div class="container">
+        <h1 class="sub-title">My work</h1>
+        <div class="work-list">
+            <div class="work">
+                <img src="images/work1.png">
+                <div class="layer">
+                    <h3>Journal Cover Art Design</h3>
+                    <p>This is a cover art for article that describes a enzyme
+                        going awry using inspiration from the game "where is
+                        wally"
+                    </p>
+                </div>
+            </div>
+            <div class="work">
+                <img src="images/work2.png">
+                <div class="layer">
+                    <h3>Journal Cover Art Design</h3>
+                    <p>This is a cover art for article that describes a enzyme
+                        going awry using inspiration from the game "where is
+                        wally"
+                    </p>
+                </div>
+            </div>
+            <div class="work">
+                <img src="images/work3.jpg">
+                <div class="layer">
+                    <h3>Journal Cover Art Design</h3>
+                    <p>This is a cover art for article that describes a enzyme
+                        going awry using inspiration from the game "where is
+                        wally"
+                    </p>
+                </div>
+            </div>
+        </div>
+        <a href="portfolio.html" class="btn">See more</a>
+    </div>
+</div>
+
+<!---------------contact---------------->
+<div id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="contact-left">
+                <h1 class="sub-title">Contact Me</h1>
+                <p><i class="fa-regular fa-paper-plane"></i> alison.zou@vanderbilt.edu</p>
+                <p><i class="fa-solid fa-phone"></i> 9729049781</p>
+                <div class="social-icons">
+                    <a href="https://linkedin.com"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+                <a href="images/mycv.pdf" download class="btn btn2">Download CV</a>
+            </div>
+            <div class="contact-right">
+                <form>
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                    <input type="email" name="Email" placeholder="Your Email" required>
+                    <input type="message" name="Message" placeholder="Your Message" required>
+                    <buttom type="submit" class="btn btn2">Submit</buttom>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="copyright">
+        <p>Copyright © Alison. Made with &lt3</p>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
