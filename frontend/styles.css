@@ -13,7 +13,7 @@ body {
 #home #header {
     width: 100%;
     height: 100vh;
-    background-image: url(images/background2.png);
+    background-image: url(images/background.png);
     background-size: cover;
     background-position: center;
 }
@@ -210,7 +210,7 @@ portfolio{
 
 .work-list{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 40px;
     margin-top: 50px;
 }
@@ -231,7 +231,8 @@ portfolio{
 .layer{
     width: 100%;
     height: 0;
-    background: linear-gradient(rgba(198, 229, 255, 0.6), #6690b5);
+    background: #6690b5;
+    /*background: linear-gradient(rgba(198, 229, 255, 0.6), #6690b5);*/
     border-radius: 10px;
     position: absolute;
     left: 0;
