@@ -100,6 +100,10 @@ nav ul li a:hover::after{
 .about-col-2{
     flex-basis: 60%;
 }
+.about-col-2 img{
+    width: 100%;
+    border-radius: 15px;
+}
 
 .sub-title{
     font-size: 60px;
@@ -389,3 +393,15 @@ form btn2{
 
     }
 }
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #e24c81;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
