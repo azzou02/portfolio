@@ -1,0 +1,492 @@
+:root {
+  --bg: #3D3C4F;
+  --ink: #0b0b0b;
+  --purple: #c8bbff;
+  --badge: #eee9ff;
+  --radius: 18px;
+}
+
+/* ========== global & resets ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.35;
+}
+
+body.home {
+  background: #000;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section {
+  max-width: 100%;
+  margin: 1.5rem 0 2rem;
+  padding: 0 2rem;
+}
+
+/* ========== top scrolling bar ========== */
+.scroll {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #fff;
+}
+
+.scroll_inner {
+  display: flex;
+  gap: 2rem;
+}
+
+.scroll_track {
+  display: inline-block;
+  padding: 0 0;
+  animation: scroll-left 24s linear infinite;
+  will-change: transform;
+}
+
+.scroll_text {
+  font-weight: 800;
+  font-size: clamp(28px, 6vw, 62px);
+  letter-spacing: 1px;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll_track {
+    animation: none;
+  }
+}
+
+/* ========== sticky nav ========== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--purple);
+}
+
+.nav_inner {
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+}
+
+.logo {
+  margin-left: 3px;
+}
+
+.spacer {
+  flex: 0 0 4px;
+}
+
+.menu {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.rect-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem 1rem;
+  margin-right: 4px;
+  background: #fff;
+  font-size: 24px;
+  transition: transform .06s ease, background-color .15s linear, color .15s linear;
+}
+
+.rect-button:hover {
+  background: #FFDD00;
+  color: #000;
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem 1.5rem;
+  margin-left: 0.5rem;
+  background: #fff;
+  border-radius: 999px;
+  font-size: 24px;
+  transition: transform .06s ease, background-color .15s linear, color .15s linear;
+}
+
+/* ========== hero section ========== */
+.hero {
+  min-height: 80svh;
+  display: grid;
+  place-items: center;
+  text-align: left;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero_content {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  padding: 2rem;
+  color: #fff;
+}
+
+.hero h1 {
+  margin: 4rem 0 0.75rem 0;
+  padding: 0 2rem;
+  font-size: clamp(28px, 3.1vw, 42px);
+  font-weight: 300;
+  color: white;
+}
+
+.hero p {
+  font-size: clamp(18px, 2.4vw, 28px);
+  max-width: 70ch;
+  margin: 0;
+}
+
+/* --- p5.js Canvas Overrides --- */
+#p5-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+#p5-container canvas {
+  display: block !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  position: absolute !important;
+}
+
+/* ========== cards (default) ========== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+.card {
+  background: #fff;
+  overflow: hidden;
+  transition: transform .1s ease;
+}
+
+.card_media {
+  height: 250px;
+  object-fit: cover;
+  background: #ddd;
+  display: grid;
+  place-items: center;
+  align-items: center;
+}
+
+.card_body {
+  padding: 1rem;
+}
+
+.badge {
+  display: inline-block;
+  margin-top: .5rem;
+  padding: .25rem .55rem;
+  background: var(--badge);
+  font-size: 14px;
+}
+
+/* ========== Footer ========== */
+footer {
+  border-top: 1px solid #fff;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 100%;
+  margin: 3rem auto 2rem;
+  font-size: 14px;
+}
+
+/*
+==================================================
+  PAGE-SPECIFIC STYLES
+==================================================
+*/
+
+/* ========== code page ========== */
+.code .cards {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: auto auto;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.code .card {
+  background: none;
+  overflow: visible;
+  transition: none;
+}
+
+.code .card:hover {
+  transform: none;
+}
+
+.code .card_media {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+  padding: 0;
+}
+
+.code .card:nth-child(1) {
+  grid-column: span 3;
+  grid-row: 1;
+}
+
+.code .card:nth-child(2) {
+  grid-column: 4 / span 3;
+  grid-row: 1;
+}
+
+.code .card:nth-child(3) {
+  grid-column: 7 / span 7;
+  grid-row: 1 / span 2;
+}
+
+.code .card:nth-child(4) {
+  grid-column: 1 / span 6;
+  grid-row: 2;
+}
+
+.code .card:nth-child(5) {
+  grid-column: 7 / span 7;
+  grid-row: 2;
+  align-self: end;
+}
+
+.code .card:nth-child(6) {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+}
+
+.code .card:nth-child(7) {
+  grid-column: 4 / span 3;
+  grid-row: 3;
+}
+
+.code .card:nth-child(8) {
+  grid-column: 7 / span 7;
+  grid-row: 3;
+}
+
+/* ========== graphic page ========== */
+.graphic .cards {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.graphic .card {
+  background: none;
+  overflow: hidden;
+  transition: none;
+}
+
+.graphic .card:hover {
+  transform: none;
+}
+
+.graphic .card_media {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+  padding: 0;
+}
+
+.graphic .card:nth-child(1) {
+  grid-column: span 4;
+  grid-row: 1;
+}
+
+.graphic .card:nth-child(2) {
+  grid-column: 5 / span 4;
+  grid-row: 1;
+}
+
+.graphic .card:nth-child(3) {
+  grid-column: 9 / span 4;
+  grid-row: 1;
+}
+
+.graphic .card:nth-child(4) {
+  grid-column: 1 / span 4;
+  grid-row: 2;
+  align-self: start;
+}
+
+.graphic .card:nth-child(5) {
+  grid-column: 5 / span 4;
+  grid-row: 2;
+  align-self: end;
+}
+
+.graphic .card:nth-child(6) {
+  grid-column: 9 / span 4;
+  grid-row: 2;
+  align-self: start;
+}
+
+/* ========== paint page ========== */
+.paint .cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.masonry-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 45%;
+  min-width: 300px;
+} 
+
+.paint .card {
+  background: none;
+  overflow: visible;
+  transition: none;
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 100%;
+}
+
+.paint .card_media {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* ========== UI/UX Page ========== */
+.uiux h1 {
+  color: #fff;
+}
+
+/* ========== About Page ========== */
+.about h1 {
+  color: #fff;
+}
+
+
+/*
+==================================================
+  PAGE-SPECIFIC NAV BUTTON STATES
+==================================================
+*/
+
+/* --- code button --- */
+.code #code-button,
+#code-button:hover {
+  background: #003CFF;
+  color: #FFDD00;
+}
+
+#code-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- graphics button --- */
+.graphic #graphics-button,
+#graphics-button:hover {
+  background: #FF69D2;
+  color: #fff;
+}
+
+#graphics-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- paints button --- */
+.paint #paints-button,
+#paints-button:hover {
+  background: #FFDD00;
+  color: #000;
+}
+
+#paints-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- uiux button --- */
+.uiux #uiux-button,
+#uiux-button:hover {
+  background: #003CFF;
+  color: #FFDD00;
+}
+
+#uiux-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- about button --- */
+.about #about-button,
+#about-button:hover {
+  background: #FF69D2;
+  color: #fff;
+}
+
+#about-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
