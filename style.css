@@ -176,14 +176,13 @@ a {
   margin: 0;
 }
 
-/* --- p5.js Canvas Overrides --- */
-#p5-container {
+.hero #p5-container {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-#p5-container canvas {
+.hero #p5-container canvas {
   display: block !important;
   top: 50% !important;
   left: 50% !important;
@@ -235,7 +234,7 @@ footer {
   justify-content: space-between;
   gap: 1rem;
   max-width: 100%;
-  margin: 3rem auto 2rem;
+  margin: 2rem auto 2rem;
   font-size: 14px;
 }
 
@@ -424,11 +423,31 @@ footer {
   color: #fff;
 }
 
+.about .hero {
+  min-height: 50svh;
+  display: grid;
+  place-items: center;
+  text-align: left;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.about .hero_content {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  padding: 2rem;
+  color: #fff;
+}
+
+
+
 
 /*
-==================================================
+=======================================
   PAGE-SPECIFIC NAV BUTTON STATES
-==================================================
+=======================================
 */
 
 /* --- code button --- */
@@ -489,4 +508,72 @@ footer {
 #about-button:hover {
   transform: translate(-1px, -1px);
   cursor: pointer;
+}
+
+/* 
+=============================
+ PROJECT PAGE LAYOUTS (P5)
+============================= 
+*/
+
+.project-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 40px auto 10px; 
+    padding: 10px;
+}
+
+.project-sketch {
+    flex: 0 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+#defaultCanvas0 {
+    max-width: 100%;
+    height: auto !important;
+}
+
+.project-info {
+    flex: 1;
+    max-width: 500px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.project-info h1 {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.project-info h3 {
+  color: #fff;
+}
+
+.project-description {
+    line-height: 1.6;
+    color: #ebebeb;
+    margin-bottom: 30px;
+}
+
+.project-interactions {
+    padding-left: 20px;
+    line-height: 1.8;
+    color: #ebebeb;
+}
+
+@media (max-width: 900px) {
+    .project-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .project-info {
+        max-width: 100%;
+    }
 }
