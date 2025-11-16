@@ -1,153 +1,157 @@
 const colorPalette = [
-    '#F6558F',
-    '#FF70CB',
-    '#FFADEE',
-    '#3942ED',
-    '#FFDD02',
-    '#D1FF46',
-    '#57DAF0',
-    '#9CFFD9',
-    '#AD6FF9'
+  '#F6558F',
+  '#FF70CB',
+  '#FFADEE',
+  '#3942ED',
+  '#FFDD02',
+  '#D1FF46',
+  '#57DAF0',
+  '#9CFFD9',
+  '#AD6FF9'
 ];
 
-let cellCount = 5;
-let flowers = [];
-let sound;
-let sound2;
-let sound3;
+// reusable sketch definition in instance mode
+const makeFlowerSketch = (containerId) => (p) => {
+  let cellCount = 5;
+  let flowers = [];
+  let soundClick;
+  let soundGrid;
 
-function setup() {
-    let canvas = createCanvas(500, 500);
-    canvas.parent('p5-container');
-    rectMode(CENTER);
-
-    sound = loadSound('/assets/sounds/flower-pressed.mp3');
-    sound3 = loadSound('assets/sounds/new-screen.mp3');
-
-    createGrid();
-}
-
-function draw() {
-    background(232, 210, 255);
-
-    for (let flower of flowers) {
-        flower.show();
-        flower.update();
-    }
-
-}
-
-function createGrid() {
-    flowers = [];
-
-    let margin = 20;
-    let cellSize = (width - margin * 2) / cellCount;
-
-    for (let row = 0; row < cellCount; row++) {
-        for (let col = 0; col < cellCount; col++) {
-            let x = margin + col * cellSize + cellSize / 2;
-            let y = margin + row * cellSize + cellSize / 2;
-
-            let newFlower = new Flower(x, y, cellSize * 0.4);
-            flowers.push(newFlower);
-        }
-    }
-}
-
-class Flower {
+  class Flower {
     constructor(x, y, size) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.petalRotation = 0;
-
-        this.defaultColor = color(217, 141, 240);
-        this.hoverColor = color(random(colorPalette));
-        this.currentPetalColor = this.defaultColor;
+      this.x = x;
+      this.y = y;
+      this.size = size;
+      this.petalRotation = 0;
+      this.defaultColor = p.color(217, 141, 240);
+      this.hoverColor = p.color(p.random(colorPalette));
+      this.currentPetalColor = this.defaultColor;
     }
 
     update() {
-        this.petalRotation += 0.02;
+      this.petalRotation += 0.02;
 
-        let distance = dist(mouseX, mouseY, this.x, this.y);
-        let targetColor;
-        if (distance < 2 * this.size) {
-            targetColor = this.hoverColor;
-        } else {
-            targetColor = this.defaultColor;
-        }
+      const distance = p.dist(p.mouseX, p.mouseY, this.x, this.y);
+      const targetColor = distance < 2 * this.size ? this.hoverColor : this.defaultColor;
 
-        this.currentPetalColor = lerpColor(this.defaultColor, targetColor, 1);
-
+      // instant switch (you can lerp if you like)
+      this.currentPetalColor = targetColor;
     }
 
     show() {
-        push();
+      p.push();
 
-        // move the origin to the flower's position
-        translate(this.x, this.y);
+      p.translate(this.x, this.y);
 
-        // stem 
-        fill(32, 199, 85);
-        rect(0, this.size * 0.5, this.size * 0.1, this.size);
+      // stem
+      p.fill(32, 199, 85);
+      p.rect(0, this.size * 0.5, this.size * 0.1, this.size);
 
-        // petals
-        push();
-        rotate(this.petalRotation);
-        fill(this.currentPetalColor);
-        for (let i = 0; i < 8; i++) {
-            circle(this.size * 0.35, this.size * 0.35, this.size * 0.7);
-            rotate(PI / 3);
-        }
-        pop();
+      // petals
+      p.push();
+      p.rotate(this.petalRotation);
+      p.fill(this.currentPetalColor);
+      for (let i = 0; i < 8; i++) {
+        p.circle(this.size * 0.35, this.size * 0.35, this.size * 0.7);
+        p.rotate(p.PI / 3);
+      }
+      p.pop();
 
-        // face
-        rotate(4 * (PI / 6));
-        fill(245, 197, 66);
-        circle(0, 0, this.size * 0.95);
+      // face
+      p.rotate(4 * (p.PI / 6));
+      p.fill(245, 197, 66);
+      p.circle(0, 0, this.size * 0.95);
 
-        // eyes
-        rotate(PI / 3);
-        fill(255);
-        circle(-this.size * 0.2, 0, this.size * 0.35);
-        circle(this.size * 0.2, 0, this.size * 0.35);
-        fill(0);
-        circle(-this.size * 0.2, 0, this.size * 0.12);
-        circle(this.size * 0.2, 0, this.size * 0.12);
+      // eyes
+      p.rotate(p.PI / 3);
+      p.fill(255);
+      p.circle(-this.size * 0.2, 0, this.size * 0.35);
+      p.circle(this.size * 0.2, 0, this.size * 0.35);
+      p.fill(0);
+      p.circle(-this.size * 0.2, 0, this.size * 0.12);
+      p.circle(this.size * 0.2, 0, this.size * 0.12);
 
-        pop();
+      p.pop();
     }
 
-    clicked() {
+    clicked(mx, my) {
+      const d = p.dist(mx, my, this.x, this.y);
+      if (d < this.size) {
         this.defaultColor = this.hoverColor;
+        if (soundClick && soundClick.isLoaded()) soundClick.play();
+      }
     }
 
     reset() {
-        this.defaultColor = color(217, 141, 240);
+      this.defaultColor = p.color(217, 141, 240);
     }
+  }
 
-}
+  function createGrid() {
+    flowers = [];
+    const margin = 20;
+    const squareSize = Math.min(p.width, p.height);
+    const cellSize = (squareSize - margin * 2) / cellCount;
 
-function mousePressed() {
-    for (let flower of flowers) {
-        let distance = dist(mouseX, mouseY, flower.x, flower.y);
-
-        if (distance < flower.size) {
-            flower.clicked();
-            sound.play();
-        }
+    for (let row = 0; row < cellCount; row++) {
+      for (let col = 0; col < cellCount; col++) {
+        const x = margin + col * cellSize + cellSize / 2;
+        const y = margin + row * cellSize + cellSize / 2;
+        flowers.push(new Flower(x, y, cellSize * 0.4));
+      }
     }
-}
+  }
 
-function keyPressed() {
-    if (keyCode === BACKSPACE) {
-        for (let flower of flowers) {
-            flower.reset();
-        }
+  p.setup = () => {
+    const container = document.getElementById(containerId);
+    const side = container.clientWidth || 400; // fallback
+
+    const canvas = p.createCanvas(side, side);
+    canvas.parent(container);
+
+    p.rectMode(p.CENTER);
+
+    // sounds are optional; if they 404 the sketch still runs
+    soundClick = p.loadSound('/assets/sounds/flower-pressed.mp3', () => {}, () => {});
+    soundGrid = p.loadSound('/assets/sounds/new-screen.mp3', () => {}, () => {});
+
+    createGrid();
+  };
+
+  p.windowResized = () => {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const side = container.clientWidth || 400;
+    p.resizeCanvas(side, side);
+    createGrid();
+  };
+
+  p.draw = () => {
+    p.background(232, 210, 255);
+    for (const f of flowers) {
+      f.update();
+      f.show();
     }
-    if (keyCode === RETURN) {
-        cellCount = int(random(1, 8));
-        createGrid();
-        sound3.play();
+  };
+
+  p.mousePressed = () => {
+    for (const f of flowers) {
+      f.clicked(p.mouseX, p.mouseY);
     }
-}
+  };
+
+  p.keyPressed = () => {
+    if (p.keyCode === p.BACKSPACE) {
+      for (const f of flowers) f.reset();
+    }
+    if (p.keyCode === p.ENTER || p.keyCode === p.RETURN) {
+      cellCount = p.int(p.random(1, 8));
+      createGrid();
+      if (soundGrid && soundGrid.isLoaded()) soundGrid.play();
+    }
+  };
+};
+
+// create two instances: left + right squares
+new p5(makeFlowerSketch('p5-container-left'));
+new p5(makeFlowerSketch('p5-container-right'));
