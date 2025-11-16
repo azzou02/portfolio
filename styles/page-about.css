@@ -1,0 +1,22 @@
+/* About page */
+.about h1 {
+  color: #fff;
+}
+
+.about .hero {
+  min-height: 50svh;
+  display: grid;
+  place-items: center;
+  text-align: left;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.about .hero_content {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  padding: 2rem;
+  color: #fff;
+}

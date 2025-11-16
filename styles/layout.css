@@ -1,0 +1,123 @@
+.scroll {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #fff;
+}
+
+.scroll_inner {
+  display: flex;
+  gap: 2rem;
+}
+
+.scroll_track {
+  display: inline-block;
+  padding: 0 0;
+  animation: scroll-left 24s linear infinite;
+  will-change: transform;
+}
+
+.scroll_text {
+  font-weight: 800;
+  font-size: clamp(28px, 6vw, 62px);
+  letter-spacing: 1px;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll_track {
+    animation: none;
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--purple);
+}
+
+.nav_inner {
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+}
+
+.logo {
+  margin-left: 3px;
+}
+
+.spacer {
+  flex: 0 0 4px;
+}
+
+.menu {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.hero {
+  min-height: 80svh;
+  display: grid;
+  place-items: center;
+  text-align: left;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero_content {
+  position: relative;
+  z-index: 10;
+  max-width: 100%;
+  padding: 2rem;
+  color: #fff;
+}
+
+.hero h1 {
+  margin: 4rem 0 0.75rem 0;
+  padding: 0 2rem;
+  font-size: clamp(28px, 3.1vw, 42px);
+  font-weight: 300;
+  color: white;
+}
+
+.hero p {
+  font-size: clamp(18px, 2.4vw, 28px);
+  max-width: 70ch;
+  margin: 0;
+}
+
+.hero #p5-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero #p5-container canvas {
+  display: block !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  position: absolute !important;
+}
+
+footer {
+  border-top: 1px solid #fff;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 100%;
+  margin: 2rem auto 2rem;
+  font-size: 14px;
+}

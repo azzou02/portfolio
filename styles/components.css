@@ -1,0 +1,118 @@
+/* nav buttons */
+.rect-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem 1rem;
+  margin-right: 4px;
+  background: #fff;
+  font-size: 24px;
+  transition: transform .06s ease, background-color .15s linear, color .15s linear;
+}
+
+.rect-button:hover {
+  background: #FFDD00;
+  color: #000;
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+.nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem 1.5rem;
+  margin-left: 0.5rem;
+  background: #fff;
+  border-radius: 999px;
+  font-size: 24px;
+  transition: transform .06s ease, background-color .15s linear, color .15s linear;
+}
+
+/* cards (default) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  justify-content: center;
+}
+
+.card {
+  background: #fff;
+  overflow: hidden;
+  transition: transform .1s ease;
+}
+
+.card_media {
+  height: 250px;
+  object-fit: cover;
+  background: #ddd;
+  display: grid;
+  place-items: center;
+  align-items: center;
+}
+
+.card_body {
+  padding: 1rem;
+}
+
+
+/* --- code button --- */
+.code #code-button,
+#code-button:hover {
+  background: #003CFF;
+  color: #FFDD00;
+}
+
+#code-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- graphics button --- */
+.graphic #graphics-button,
+#graphics-button:hover {
+  background: #FF69D2;
+  color: #fff;
+}
+
+#graphics-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- paints button --- */
+.paint #paints-button,
+#paints-button:hover {
+  background: #FFDD00;
+  color: #000;
+}
+
+#paints-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- uiux button --- */
+.uiux #uiux-button,
+#uiux-button:hover {
+  background: #003CFF;
+  color: #FFDD00;
+}
+
+#uiux-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}
+
+/* --- about button --- */
+.about #about-button,
+#about-button:hover {
+  background: #FF69D2;
+  color: #fff;
+}
+
+#about-button:hover {
+  transform: translate(-1px, -1px);
+  cursor: pointer;
+}

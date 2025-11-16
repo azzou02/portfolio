@@ -1,0 +1,36 @@
+/* paint page */
+.paint .cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.masonry-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+.paint .card {
+  background: none;
+  overflow: visible;
+  transition: none;
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: 100%;
+}
+
+.paint .card_media {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}

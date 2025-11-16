@@ -1,0 +1,42 @@
+@media (pointer: fine) and (hover: hover) {
+  html, body {
+    cursor: none;
+  }
+
+  .cursor-root {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    background: #fff;
+    mix-blend-mode: difference;
+    will-change: transform, opacity;
+  }
+
+  .cursor--hover .cursor-dot {
+    width: 36px;
+    height: 36px;
+    opacity: 0.8;
+  }
+
+  .cursor--down .cursor-dot {
+    transform: translate(-50%, -50%) scale(0.85);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-ring {
+      display: none;
+    }
+  }
+}
