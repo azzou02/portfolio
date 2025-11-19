@@ -11,28 +11,16 @@ const walkingPeopleSketch = (containerId) => (p) => {
     let personY, personFrontY, personBackY;
     let posX = 15;
     
-    // Adjusted spacing for smaller containers if needed
     let spacing = 200;
     let frontSpacing = 365;
     let backSpacing = 145;
 
     let animationFrames = [];
-
     let animIndex = 0;
     let animDelay = 10;
     let animCounter = 0;
     let pauseFrames = 265;
     let isPaused = false;
-
-    // Helper to get container dimensions
-    const getContainerSize = () => {
-        const container = document.getElementById(containerId);
-        if (!container) return { w: 400, h: 400 }; // Fallback
-        return { 
-            w: container.clientWidth, 
-            h: container.clientHeight || 400 
-        };
-    };
 
     p.preload = () => {
         animationFrames = [
@@ -54,26 +42,45 @@ const walkingPeopleSketch = (containerId) => (p) => {
     };
 
     p.setup = () => {
-        const { w, h } = getContainerSize();
+        // 1. Select the container
+        const container = document.getElementById(containerId);
+        
+        // 2. Create canvas using current dimensions (or fallback)
+        const w = container.clientWidth;
+        const h = container.clientHeight || 400;
+        
         const canvas = p.createCanvas(w, h);
         canvas.parent(containerId);
 
         p.imageMode(p.CENTER);
 
-        // Resize images to fit scale (optional: adjust these numbers based on container size)
+        // Resize images 
         defaultPersonImage.resize(210, 0);
         defaultBackPersonImage.resize(150, 0);
         defaultFrontPersonImage.resize(360, 0);
-
-        recalcHeights();
 
         for (let i = 0; i < 14; ++i) personsBack[i] = defaultBackPersonImage;
         for (let i = 0; i < 10; ++i) persons[i] = defaultPersonImage;
         for (let img of animationFrames) img.resize(210, 0);
         for (let i = 0; i < 6; ++i) personsFront[i] = defaultFrontPersonImage;
+
+        recalcHeights();
+
+        // 3. NEW: ResizeObserver watches for container size changes
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                const { width, height } = entry.contentRect;
+                // Only resize if dimensions actually changed
+                if (width !== p.width || height !== p.height) {
+                    p.resizeCanvas(width, height);
+                    recalcHeights();
+                }
+            }
+        });
+        
+        resizeObserver.observe(container);
     };
 
-    // Helper to calculate Y positions based on current canvas height
     function recalcHeights() {
         personY = p.height / 1.75;
         personBackY = p.height / 3;
@@ -81,13 +88,12 @@ const walkingPeopleSketch = (containerId) => (p) => {
     }
 
     p.draw = () => {
-        p.background(0);
+        p.background(0); // Ensure background clears every frame
 
         const LOOP_DISTANCE = persons.length * spacing;
-
         if (posX > LOOP_DISTANCE) posX -= LOOP_DISTANCE;
 
-        // --- Animation logic ---
+        // Animation logic
         if (!isPaused) {
             animCounter++;
             if (animCounter >= animDelay) {
@@ -104,7 +110,7 @@ const walkingPeopleSketch = (containerId) => (p) => {
             }
         }
 
-        // --- Draw back layer ---
+        // Back layer
         for (let i = 0; i < personsBack.length; ++i) {
             p.push();
             p.translate(p.width, 0);
@@ -115,14 +121,14 @@ const walkingPeopleSketch = (containerId) => (p) => {
             p.pop();
         }
 
-        // --- Draw middle layer (animated person) ---
+        // Middle layer
         for (let i = 0; i < persons.length; ++i) {
             let img = i === 3 ? animationFrames[animIndex] : persons[i];
             p.image(img, posX + i * spacing, personY);
             p.image(img, posX + i * spacing - LOOP_DISTANCE, personY);
         }
 
-        // --- Draw front layer ---
+        // Front layer
         for (let i = 0; i < personsFront.length; ++i) {
             p.push();
             p.translate(p.width, 0);
@@ -130,32 +136,19 @@ const walkingPeopleSketch = (containerId) => (p) => {
             p.blendMode(p.BLEND);
             p.noTint();
             p.image(personsFront[i], posX + i * frontSpacing, personFrontY);
-            p.image(
-                personsFront[i],
-                posX + i * frontSpacing - LOOP_DISTANCE,
-                personFrontY
-            );
+            p.image(personsFront[i], posX + i * frontSpacing - LOOP_DISTANCE, personFrontY);
             p.blendMode(p.ADD);
             p.tint(255, 180);
             p.image(personsFront[i], posX + i * frontSpacing, personFrontY);
-            p.image(
-                personsFront[i],
-                posX + i * frontSpacing - LOOP_DISTANCE,
-                personFrontY
-            );
+            p.image(personsFront[i], posX + i * frontSpacing - LOOP_DISTANCE, personFrontY);
             p.blendMode(p.BLEND);
             p.pop();
         }
 
         posX += 0.5;
     };
-
-    p.windowResized = () => {
-        const { w, h } = getContainerSize();
-        p.resizeCanvas(w, h);
-        recalcHeights();
-    };
-
+    
+    // Note: p.windowResized is removed because ResizeObserver handles it better
 };
 
 new p5(walkingPeopleSketch('p5-container-full'));
