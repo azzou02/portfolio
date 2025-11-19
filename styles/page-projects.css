@@ -168,3 +168,33 @@ hr {
   border-top: 1px solid #000;
   color: #000;
 }
+
+
+
+/* 1. Override the grid to allow full width */
+.project-hero-row.full-width-row {
+  display: block; 
+  width: 100vw;   
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* 2. Reset the square container to be a rectangle */
+.project-hero-row.full-width-row .hero-square {
+  width: 100%;
+  height: 80vh;
+  aspect-ratio: auto;
+}
+
+/* 3. Disable the "Square" hack from the original CSS */
+.project-hero-row.full-width-row .hero-square::before {
+  content: none;
+  display: none;
+}
+
+/* Optional: Ensure canvas fills the new rectangle */
+.project-hero-row.full-width-row canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
