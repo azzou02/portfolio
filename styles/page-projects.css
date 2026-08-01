@@ -192,9 +192,11 @@ hr {
   display: none;
 }
 
-/* Optional: Ensure canvas fills the new rectangle */
-.project-hero-row.full-width-row canvas {
+/* Ensure canvas or video fills the new rectangle */
+.project-hero-row.full-width-row canvas,
+.project-hero-row.full-width-row video {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;
+  object-position: center 15%;
 }

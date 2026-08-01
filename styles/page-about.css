@@ -1,22 +1,78 @@
 /* About page */
-.about h1 {
-  color: #fff;
+
+body.about {
+  background: #fff;
 }
 
-.about .hero {
-  min-height: 50svh;
-  display: grid;
-  place-items: center;
-  text-align: left;
+/* ── Two-column layout ─────────────────────────────── */
+.about-main {
+  display: flex;
+  align-items: stretch;
+  height: 60vh;
+  border-bottom: 1px solid #000;
+}
+
+/* Left: black box that houses the p5 canvas */
+.about-canvas-col {
+  flex: 0 0 40%;
+  width: 40%;
   background: #000;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-canvas-col #p5-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-canvas-col #p5-container canvas {
+  display: block !important;
+  width: auto !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Right: white bio panel */
+.about-bio-col {
+  flex: 0 0 60%;
+  width: 60%;
+  background: #fff;
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
-.about .hero_content {
-  position: relative;
-  z-index: 10;
-  max-width: 100%;
-  padding: 2rem;
-  color: #fff;
+.about-bio-col p {
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(12px, 1vw, 15px);
+  line-height: 1.5;
+  color: #111;
+  margin: 0 0 0.8em;
+}
+
+.about-bio-col p:last-child {
+  margin-bottom: 0;
+}
+
+.about-arrow {
+  display: block;
+  margin-top: auto;
+  padding-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/* ── Bottom section (reserved for graphics) ────────── */
+.about-bottom {
+  background: #fff;
+  min-height: 200px;
 }

@@ -1,4 +1,8 @@
 /* graphics page layout */
+body.graphic {
+  background: #FF69D2;
+}
+
 .graphic .cards {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

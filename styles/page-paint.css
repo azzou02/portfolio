@@ -1,4 +1,7 @@
 /* paint page */
+body.paint {
+  background: #FFDD00;
+}
 .paint .cards {
   display: flex;
   flex-wrap: wrap;

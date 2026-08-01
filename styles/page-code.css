@@ -1,4 +1,8 @@
 /* code page layout */
+body.code {
+  background: #003CFF;
+}
+
 .code .cards {
   display: grid;
   grid-template-columns: repeat(13, 1fr);

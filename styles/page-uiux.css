@@ -1,4 +1,8 @@
 /* UI/UX page */
+body.uiux {
+  background: #003CFF;
+}
+
 .uiux h1 {
   color: #fff;
 }
