@@ -1,3 +1,40 @@
+// ========= scroll hint =========
+(function () {
+  const hint = document.querySelector('.scroll-hint');
+  if (!hint) return;
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      hint.classList.add('hidden');
+      window.removeEventListener('scroll', onScroll);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+// ========= typewriter intro =========
+(function () {
+  const el = document.querySelector('.intro_text');
+  if (!el) return;
+  const text = el.dataset.text || '';
+  let i = 0;
+  let started = false;
+
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !started) {
+      started = true;
+      const type = () => {
+        if (i < text.length) {
+          el.textContent += text[i++];
+          setTimeout(type, 38);
+        }
+      };
+      type();
+    }
+  }, { threshold: 0.25 });
+
+  observer.observe(el);
+})();
+
 // ========= name scroll ========
 function ensureSeamlessscroll(){
       const tracks = document.querySelectorAll('.scroll_track');
