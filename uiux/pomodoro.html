@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pomodoro Timer — Alison Zou</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles/base.css">
+    <link rel="stylesheet" href="../styles/components.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../styles/cursor.css">
+    <link rel="stylesheet" href="../styles/page-projects.css">
+    <style>
+        .project-hero-row.full-width-row .hero-square {
+            height: auto;
+        }
+
+        .project-hero-row.full-width-row .hero-square img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .pomodoro-side {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .pomodoro-side img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="project">
+
+    <main class="project-page">
+
+        <header class="project-header">
+            <h1>Pomodoro Timer</h1>
+            <div class="project-year">2025</div>
+        </header>
+        <hr>
+
+        <section class="project-hero">
+            <div class="project-hero-row full-width-row">
+                <div class="hero-square">
+                    <img src="/assets/pomodoro-timer.png" alt="Pomodoro Timer — hand-illustrated tomato timer" />
+                </div>
+            </div>
+        </section>
+
+        <section class="project-copy">
+            <div class="project-description-group">
+                <p class="project-description">
+                    A playful take on the classic Pomodoro technique, built around a custom hand-drawn tomato
+                    illustration that doubles as the timer display. Instead of a generic countdown clock, the numbers
+                    sit inside an illustrated tomato "screen," with a second tomato character standing by to react
+                    when time's up — because staring at a plain digital clock for 25 minutes is nobody's idea of fun.
+                </p>
+                <p class="project-description">
+                    <strong>Design —</strong> Warm, appetite-appealing palette (coral, tomato red, golden yellow)
+                    that leans into the theme without tipping into clip-art territory. The illustration is the
+                    interface — no separate clock face bolted onto a mascot. Rounded pill buttons and an italic serif
+                    wordmark keep the tone friendly and a little editorial, not sterile "productivity tool." Minimal
+                    UI chrome so the tomato stays the star.
+                </p>
+                <p class="project-description">
+                    <strong>Features —</strong> Three session modes: Pomodoro, Short Break, Long Break. Start/reset
+                    controls. A sound alert plays when time's up, and the companion tomato switches to a yawning GIF
+                    — a small reward/punishment gag for finishing (or losing focus during) a session. Manual session
+                    switching keeps the user intentional about starting their next block.
+                </p>
+                <p class="project-description">
+                    <strong>Stack —</strong> React (frontend), Node.js (backend), HTML/CSS. Designed and illustrated
+                    the tomato characters, then built the full front end and backend — timer logic, state management,
+                    and wiring up the sound and GIF trigger on completion.
+                </p>
+                <p class="project-description">
+                    <strong>Challenges —</strong> Layout was the trickiest part. Fitting UI elements naturally inside
+                    an irregular, hand-drawn shape — rather than a clean rectangular container — took a lot more
+                    careful alignment and iteration than a standard flat-UI layout would have.
+                </p>
+            </div>
+            <div class="pomodoro-side">
+                <img src="/assets/yawn.GIF" alt="Yawning tomato companion character" />
+                <img src="/assets/clock.PNG" alt="Timer display detail" />
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div>@alison zou 2025</div>
+        <div><a href="https://www.linkedin.com/in/alison-zou/">linkedin</a> | <a
+                href="mailto:alisonzbb@gmail.com">email</a>
+        </div>
+    </footer>
+
+    <script src="/scripts/nav.js"></script>
+    <script src="/scripts/scripts.js" defer></script>
+
+</body>
+
+</html>
