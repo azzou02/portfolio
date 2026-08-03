@@ -68,11 +68,55 @@ body.about {
   display: block;
   margin-top: auto;
   padding-top: 2rem;
-  font-size: 1.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(12px, 1vw, 15px);
+  color: #111;
+  text-decoration: none;
+  border-bottom: 1px solid #111;
+  width: fit-content;
 }
 
-/* ── Bottom section (reserved for graphics) ────────── */
-.about-bottom {
+.about-arrow:hover {
+  opacity: 0.5;
+}
+
+/* ── Photo scatter section ─────────────────────────── */
+.about-scatter {
+  position: relative;
   background: #fff;
-  min-height: 200px;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.about-interests-header {
+  padding: 1rem 1.5rem 1rem;
+  border-top: 1px solid #000;
+  background: #fff;
+}
+
+.scatter-title {
+  margin: 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 400;
+  color: #111;
+}
+
+.scatter-img {
+  position: absolute;
+  left: calc(var(--sx, 0) * 1px);
+  top:  calc(var(--sy, 0) * 1px);
+  transform: rotate(var(--rot, 0deg)) translate(var(--dx, 0px), var(--dy, 0px));
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: none;
+  will-change: transform;
+}
+
+.scatter-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  pointer-events: none;
+  user-select: none;
 }

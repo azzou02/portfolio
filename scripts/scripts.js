@@ -54,6 +54,61 @@ function ensureSeamlessscroll(){
 };
 
 
+// ========= scatter flee =========
+(function () {
+  const section = document.getElementById('about-scatter');
+  if (!section) return;
+
+  const items = Array.from(section.querySelectorAll('.scatter-img'));
+  const FLEE_RADIUS = 160;
+  const FLEE_STRENGTH = 110;
+
+  // Position each item based on its data-x / data-y (% of section)
+  function layout() {
+    const W = section.offsetWidth;
+    const H = section.offsetHeight;
+    items.forEach(el => {
+      const px = (parseFloat(el.dataset.x) / 100) * W;
+      const py = (parseFloat(el.dataset.y) / 100) * H;
+      el.style.setProperty('--sx', px);
+      el.style.setProperty('--sy', py);
+    });
+  }
+  layout();
+  window.addEventListener('resize', layout);
+
+  section.addEventListener('mousemove', (e) => {
+    const rect = section.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    items.forEach(el => {
+      const elRect = el.getBoundingClientRect();
+      const cx = elRect.left - rect.left + elRect.width  / 2;
+      const cy = elRect.top  - rect.top  + elRect.height / 2;
+      const dx = cx - mx;
+      const dy = cy - my;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < FLEE_RADIUS && dist > 0) {
+        const force = (1 - dist / FLEE_RADIUS) * FLEE_STRENGTH;
+        el.style.setProperty('--dx', (dx / dist) * force + 'px');
+        el.style.setProperty('--dy', (dy / dist) * force + 'px');
+      } else {
+        el.style.setProperty('--dx', '0px');
+        el.style.setProperty('--dy', '0px');
+      }
+    });
+  });
+
+  section.addEventListener('mouseleave', () => {
+    items.forEach(el => {
+      el.style.setProperty('--dx', '0px');
+      el.style.setProperty('--dy', '0px');
+    });
+  });
+})();
+
 // ========= cursor =========
 (function () {
   const supportsFine =
