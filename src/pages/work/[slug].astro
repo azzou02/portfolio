@@ -1,0 +1,67 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import '../../styles/case.css';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+<Base title={`${data.cardTitle} · Alison Zou`} description={data.title}>
+  <div class="case">
+    <aside class="case__side">
+      <a class="back" href="/work"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M15 7H1m6-6L1 7l6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>BACK</a>
+      <h1>{data.title}</h1>
+      <nav class="toc" aria-label="On this page">
+        {data.toc.map((t) => <a href={`#${t.id}`} data-toc={t.id}>{t.label}</a>)}
+      </nav>
+    </aside>
+    <article class="case__main">
+      <div class="hero">
+        <Image src={data.cover} alt={data.heroAlt} widths={[734, 1468]} sizes="(min-width: 900px) 734px, 100vw" format="webp" quality={85} loading="eager" style="object-position: top" />
+      </div>
+      <ul class="pills">
+        {data.pills.map((p) => <li>{p.dot && <i></i>}{p.label}</li>)}
+      </ul>
+      <div class="cs-body"><Content /></div>
+    </article>
+  </div>
+  <script>
+    const links = new Map([...document.querySelectorAll('[data-toc]')].map((a) => [a.dataset.toc, a]));
+    const set = (id) => links.forEach((a, k) => a.classList.toggle('is-active', k === id));
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) set(e.target.id); });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    document.querySelectorAll('[data-section]').forEach((s) => links.has(s.id) && io.observe(s));
+    set(links.keys().next().value);
+  </script>
+</Base>
+
+<style>
+  .case { max-width: var(--page-max); margin: 0 auto; padding: 68px 30px 120px 51px; display: grid; grid-template-columns: 308px minmax(0, 734px); column-gap: 116px; align-items: start; }
+  .case__side { position: sticky; top: 24px; padding-top: 92px; }
+  .back { display: inline-flex; align-items: center; gap: 8px; height: 35px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--surface); font: 16px var(--font-sans); color: inherit; text-decoration: none; }
+  h1 { font: 400 var(--fs-case-title)/1 var(--font-serif); margin: 20px 0 55px; }
+  .toc { display: flex; flex-direction: column; margin-left: -7px; }
+  .toc a { height: 35px; display: flex; align-items: center; padding: 0 7px; width: fit-content; border-radius: var(--radius-pill); font: 14px var(--font-mono); text-transform: uppercase; color: inherit; text-decoration: none; }
+  .toc a.is-active { background: var(--yellow); padding: 0 12px; margin-left: -5px; }
+  .hero { border-radius: var(--radius-lg); overflow: hidden; height: 423px; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pills { display: flex; gap: 14px; list-style: none; padding: 0; margin: 22px 0 0; }
+  .pills li { display: inline-flex; align-items: center; gap: 10px; height: 35px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--surface); font: 16px var(--font-sans); text-transform: uppercase; }
+  .pills i { width: 15px; height: 15px; border-radius: 50%; background: var(--lavender); }
+  .cs-body :global(.cs-section:first-child) { margin-top: 50px; }
+  @media (max-width: 900px) {
+    .case { grid-template-columns: 1fr; padding: 24px 16px 80px; row-gap: 24px; }
+    .case__side { position: static; padding-top: 0; }
+    .toc { display: none; }
+    .hero { height: auto; aspect-ratio: 734 / 423; }
+    .pills { flex-wrap: wrap; }
+  }
+</style>

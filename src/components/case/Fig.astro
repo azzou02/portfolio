@@ -1,0 +1,8 @@
+---
+import { Image } from 'astro:assets';
+// Image inside a rounded panel. tone: blue | dark | surface | none
+const { src, alt, tone = 'none', width = 1000, fit = 'contain' } = Astro.props;
+---
+<figure class={`cs-fig cs-fig--${tone}`}>
+  <Image src={src} alt={alt} widths={[width, width * 2]} sizes={`(min-width: 900px) ${width}px, 100vw`} format="webp" quality={85} loading="lazy" />
+</figure>

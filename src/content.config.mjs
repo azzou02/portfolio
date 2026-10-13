@@ -5,7 +5,7 @@ import { z } from 'astro/zod';
 // One markdown file per case study. The work page is generated from this
 // frontmatter, so adding a project means adding a file here.
 const work = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/content/work' }),
+  loader: glob({ pattern: '*.{md,mdx}', base: './src/content/work' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(), // case-study page heading
@@ -15,6 +15,10 @@ const work = defineCollection({
       order: z.number(),
       cover: image(),
       coverPosition: z.string().default('50% 50%'),
+      heroAlt: z.string(),
+      pills: z.array(z.object({ label: z.string(), dot: z.boolean().default(false) })),
+      toc: z.array(z.object({ id: z.string(), label: z.string() })),
+      meta: z.array(z.object({ label: z.string(), lines: z.array(z.string()) })),
     }),
 });
 

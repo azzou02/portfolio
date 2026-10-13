@@ -1,0 +1,10 @@
+---
+import { Image } from 'astro:assets';
+// Row of cropped phone mockups. items: [{src, alt}]
+const { items } = Astro.props;
+---
+<ul class="cs-phones">
+  {items.map((p) => (
+    <li><Image src={p.src} alt={p.alt} widths={[170, 340]} sizes="(min-width: 900px) 170px, 45vw" format="webp" quality={85} loading="lazy" /></li>
+  ))}
+</ul>
