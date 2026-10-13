@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+
+const { slug, data } = Astro.props;
+---
+<a class="card" href={`/work/${slug}`}>
+  <div class="card__img">
+    <Image
+      src={data.cover}
+      alt=""
+      widths={[573, 1146]}
+      sizes="(min-width: 900px) 573px, 100vw"
+      format="webp"
+      quality={85}
+      style={`object-position: ${data.coverPosition}`}
+    />
+  </div>
+  <div class="card__meta">
+    <h2 class="card__title">{data.cardTitle}</h2>
+    <p class="card__tags">{data.cardTags.join(' - ')}</p>
+    <span class="card__year">{data.year}</span>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: block;
+    padding: 10px 12px 17px;
+    background: var(--surface);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    cursor: pointer;
+  }
+
+  .card__img {
+    aspect-ratio: 573 / 330;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--border);
+  }
+
+  .card__img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card__meta {
+    position: relative;
+    padding: 11px 7px 0;
+  }
+
+  .card__title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: var(--fs-card-title);
+    line-height: 1.03;
+  }
+
+  .card__tags,
+  .card__year {
+    margin: 3px 0 0;
+    font-family: var(--font-sans);
+    font-variation-settings: 'opsz' 14;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--ink-muted);
+  }
+
+  .card__year {
+    position: absolute;
+    right: 9px;
+    bottom: 0;
+    margin: 0;
+  }
+
+  @media (max-width: 520px) {
+    .card__title { font-size: 24px; }
+    .card__tags, .card__year { font-size: 14px; }
+  }
+</style>

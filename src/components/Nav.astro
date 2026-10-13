@@ -1,0 +1,162 @@
+---
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const items = [
+  { key: 'home', label: 'home/', href: '/', current: path === '/' },
+  { key: 'work', label: 'work', href: '/work', current: path === '/work' || path.startsWith('/work/') },
+  { key: 'fun', label: 'fun', href: '/fun', current: path === '/fun' },
+  { key: 'about', label: 'about', href: '/about', current: path === '/about' },
+];
+---
+<nav class="nav" aria-label="Main">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/" aria-label="Alison Zou, home">
+      <img src="/assets/logo/logo-main.svg" alt="" width="61" height="40" />
+    </a>
+
+    <ul class="nav__menu">
+      {items.map((item) => (
+        <li>
+          <a
+            class={`nav__item nav__item--${item.key}`}
+            href={item.href}
+            aria-current={item.current ? 'page' : undefined}
+          >{item.label}</a>
+        </li>
+      ))}
+    </ul>
+
+    <a
+      class="nav__ext"
+      href="https://www.linkedin.com/in/alison-zou/"
+      target="_blank"
+      rel="noopener"
+      aria-label="LinkedIn (opens in a new tab)"
+    >
+      <svg viewBox="0 0 24 24" width="23" height="22" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square" aria-hidden="true">
+        <path d="M3 21 21 3M7 3h14v14" />
+      </svg>
+    </a>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: var(--nav-h);
+    background: var(--lavender);
+  }
+
+  .nav__inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--nav-pad-right) 0 var(--nav-pad-left);
+  }
+
+  .nav__logo {
+    flex: 0 0 var(--logo-w);
+    margin-right: var(--logo-gap);
+    line-height: 0;
+  }
+
+  .nav__logo img {
+    width: var(--logo-w);
+    height: auto;
+  }
+
+  .nav__menu {
+    display: flex;
+    align-items: center;
+    gap: var(--nav-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-right: auto;
+  }
+
+  .nav__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--nav-item-h);
+    padding: 5px 22px;
+    border-radius: var(--radius-pill);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--fs-nav);
+    line-height: normal;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  /* home is a square box, not a pill */
+  .nav__item--home {
+    padding: 4px 20px;
+    border-radius: 0;
+  }
+
+  /* One color pair per section; hover and the current page share it. */
+  .nav__item--home { --on-bg: var(--ink); --on-fg: var(--paper); }
+  .nav__item--work { --on-bg: var(--blue); --on-fg: var(--paper); }
+  .nav__item--fun { --on-bg: var(--yellow); --on-fg: var(--ink); }
+  .nav__item--about { --on-bg: var(--pink); --on-fg: var(--paper); }
+
+  .nav__item:hover,
+  .nav__item[aria-current='page'] {
+    background: var(--on-bg);
+    color: var(--on-fg);
+  }
+
+  .nav__ext {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 55px;
+    height: var(--nav-item-h);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .nav__ext:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* Provisional mobile treatment until a mobile design exists. */
+  @media (max-width: 900px) {
+    .nav {
+      --nav-h: 64px;
+      --nav-item-h: 40px;
+      --nav-gap: 8px;
+      --nav-pad-left: 14px;
+      --nav-pad-right: 14px;
+      --logo-w: 44px;
+      --logo-gap: 14px;
+      --fs-nav: 18px;
+    }
+    .nav__item { padding: 4px 14px; }
+    .nav__item--home { padding: 4px 12px; }
+    .nav__ext { width: 40px; }
+    .nav__ext svg { width: 18px; height: 18px; }
+  }
+
+  @media (max-width: 520px) {
+    .nav {
+      --nav-gap: 5px;
+      --nav-pad-left: 10px;
+      --nav-pad-right: 10px;
+      --logo-w: 32px;
+      --logo-gap: 8px;
+      --fs-nav: 15px;
+    }
+    .nav__item { padding: 4px 10px; }
+    .nav__item--home { padding: 4px 9px; }
+    .nav__ext { width: 34px; }
+  }
+</style>
