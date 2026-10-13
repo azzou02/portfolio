@@ -1,0 +1,49 @@
+---
+// Pure-CSS marquee. Two identical groups scroll left in lockstep, so the loop is
+// seamless and needs no JavaScript. Text and speed come from the original site.
+const unit = 'Alison Zou circa 2005 ';
+const text = unit.repeat(8);
+---
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">{text}</div>
+  <div class="ticker__track">{text}</div>
+</div>
+
+<style>
+  .ticker {
+    display: flex;
+    height: var(--ticker-h);
+    overflow: hidden;
+    background: var(--paper);
+    white-space: pre;
+    font-family: var(--font-serif);
+    font-size: var(--fs-ticker);
+    line-height: 0.943;
+    letter-spacing: -0.03em;
+    word-spacing: 0.5px;
+    padding-top: calc(var(--ticker-h) * 0.106);
+  }
+
+  .ticker__track {
+    flex: 0 0 auto;
+    padding-left: 8px;
+    animation: ticker-scroll 24s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__track { animation: none; }
+  }
+
+  @media (max-width: 900px) {
+    .ticker {
+      --ticker-h: 56px;
+      --fs-ticker: 46px;
+    }
+  }
+</style>

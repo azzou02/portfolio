@@ -1,11 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/about", "destination": "/about.html" },
-    { "source": "/code", "destination": "/code.html" },
-    { "source": "/graphics", "destination": "/graphics.html" },
-    { "source": "/paintings", "destination": "/paintings.html" },
-    { "source": "/uiux", "destination": "/uiux.html" }
+  "redirects": [
+    { "source": "/code", "destination": "/fun", "permanent": true },
+    { "source": "/code/:path*", "destination": "/fun", "permanent": true },
+    { "source": "/graphics", "destination": "/fun", "permanent": true },
+    { "source": "/paintings", "destination": "/fun", "permanent": true },
+    { "source": "/uiux", "destination": "/work", "permanent": true },
+    { "source": "/uiux/:path*", "destination": "/work", "permanent": true }
   ]
 }

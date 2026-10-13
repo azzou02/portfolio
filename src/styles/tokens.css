@@ -1,0 +1,66 @@
+/* Design tokens, read from the Figma file "portfolio" (page: version 3). */
+
+@font-face {
+  font-family: 'JejuMyeongjo';
+  src: url('/fonts/jeju-myeongjo-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* color */
+  --lavender: #c0a9fb;
+  --pink: #ff69d2;
+  --yellow: #ffdd00;
+  --blue: #003cff;
+  --ink: #000;
+  --ink-muted: #4d4d4d;
+  --surface: #f7f7f5;
+  --border: #d9d9d9;
+  --border-strong: #c6c6c6;
+  --paper: #fff;
+
+  /* type families */
+  --font-serif: 'JejuMyeongjo', 'Iowan Old Style', 'Times New Roman', serif;
+  --font-sans: 'DM Sans Variable', 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, monospace;
+  --font-stat: 'Instrument Serif', 'Times New Roman', serif;
+
+  /* type scale (px at the 1280 desktop design) */
+  --fs-ticker: 70px;
+  --fs-nav: 30px;
+  --fs-home-title: 70px;
+  --fs-home-lead: 40px;
+  --fs-card-title: 32px;
+  --fs-case-title: 40px;
+  --fs-h2: 26px;
+  --fs-h3: 22px;
+  --fs-body: 18px;
+  --fs-bio: 22px;
+  --fs-meta: 16px;
+  --fs-card: 14px;
+  --fs-label: 14px;
+  --fs-tiny: 12px;
+  --fs-stat: 52px;
+
+  /* shape */
+  --radius-pill: 50px;
+  --radius-card: 15px;
+  --radius-lg: 20px;
+
+  /* chrome geometry */
+  --ticker-h: 85px;
+  --nav-h: 85px;
+  --nav-item-h: 51px;
+  --nav-gap: 22px;
+  --nav-pad-left: 25px;
+  --nav-pad-right: 44px;
+  --logo-w: 61px;
+  --logo-gap: 56px;
+}
+
+:root {
+  --border-card: #a6a6a6;
+  --page-max: 1280px;
+}

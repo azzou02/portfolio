@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import CaseCard from '../components/CaseCard.astro';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Work · Alison Zou" description="Case studies by Alison Zou: user research, design, and product work.">
+  <main class="work">
+    <h1 class="visually-hidden">Work</h1>
+    <div class="work__grid">
+      {projects.map((p) => <CaseCard slug={p.id} data={p.data} />)}
+    </div>
+  </main>
+</Base>
+
+<style>
+  .work__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px;
+    max-width: var(--page-max);
+    margin: 27px auto 0;
+    padding: 0 30px;
+  }
+
+  @media (max-width: 900px) {
+    .work__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+      padding: 0 14px;
+    }
+  }
+</style>

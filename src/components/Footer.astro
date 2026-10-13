@@ -1,0 +1,26 @@
+---
+const year = 2026;
+---
+<footer class="footer">
+  <div>@alison zou {year}</div>
+  <div>
+    <a href="https://www.linkedin.com/in/alison-zou/" target="_blank" rel="noopener">linkedin</a>{' | '}<a href="mailto:alisonzbb@gmail.com">email</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem 1.5rem 2rem;
+    border-top: 1px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
