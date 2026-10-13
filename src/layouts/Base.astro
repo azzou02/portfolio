@@ -11,9 +11,11 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  chrome?: boolean; // false hides ticker + nav (case studies)
 }
 
 const {
+  chrome = true,
   title = 'Alison Zou',
   description = 'Portfolio of Alison Zou, a software engineer and designer who loves creating for humans.',
 } = Astro.props;
@@ -37,8 +39,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <Ticker />
-    <Nav />
+    {chrome && <Ticker />}
+    {chrome && <Nav />}
     <slot />
     <Footer />
   </body>

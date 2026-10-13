@@ -13,7 +13,7 @@ const { entry } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
 ---
-<Base title={`${data.cardTitle} · Alison Zou`} description={data.title}>
+<Base chrome={false} title={`${data.cardTitle} · Alison Zou`} description={data.title}>
   <div class="case">
     <aside class="case__side">
       <a class="back" href="/work"><svg width="16" height="14" viewBox="0 0 16 14" aria-hidden="true"><path d="M15 7H1m6-6L1 7l6 6" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>BACK</a>
