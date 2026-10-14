@@ -38,7 +38,7 @@ const photos = [
       </div>
     </section>
 
-    <section class="scatter" id="scatter" aria-label="Things I like. Drag them around.">
+    <section class="scatter" id="scatter" aria-label="Things I like">
       {photos.map((p) => (
         <div class="scatter__item" data-rot={p.rot} style={`left:${p.x}%;top:${p.y}%;width:${p.w}px`}>
           <Image src={p.src} alt={p.alt} widths={[p.w, p.w * 2]} sizes={`${p.w}px`} format="webp" quality={85} draggable="false" />
@@ -49,51 +49,59 @@ const photos = [
 
   <script>
     import { gsap } from 'gsap';
-    import { Draggable } from 'gsap/Draggable';
-    import { InertiaPlugin } from 'gsap/InertiaPlugin';
-    gsap.registerPlugin(Draggable, InertiaPlugin);
 
     const area = document.getElementById('scatter');
     const items = [...area.querySelectorAll('.scatter__item')];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let z = 10;
 
     items.forEach((el) => gsap.set(el, { rotation: +el.dataset.rot }));
 
-    // Entrance: drop in with a little overshoot once the area scrolls into view.
+    // Items lean toward the cursor; bigger ones move more. Starts after the entrance.
+    let follow = false;
+    const movers = items.map((el) => ({
+      el,
+      k: 0.1 + (parseFloat(el.style.width) - 185) / 45 * 0.08,
+      x: gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+      y: gsap.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
+      r: gsap.quickTo(el, 'rotation', { duration: 0.9, ease: 'power3.out' }),
+    }));
+    const MAX = 70;
+    const clamp = (v) => Math.max(-MAX, Math.min(MAX, v));
+
+    area.addEventListener('pointermove', (e) => {
+      if (!follow || reduce) return;
+      const box = area.getBoundingClientRect();
+      const mx = e.clientX - box.left, my = e.clientY - box.top;
+      movers.forEach((m) => {
+        const cx = m.el.offsetLeft + m.el.offsetWidth / 2;
+        const cy = m.el.offsetTop + m.el.offsetHeight / 2;
+        m.x(clamp((mx - cx) * m.k));
+        m.y(clamp((my - cy) * m.k));
+        m.r(+m.el.dataset.rot + clamp((mx - cx) * m.k) * 0.08);
+      });
+    });
+    area.addEventListener('pointerleave', () => {
+      movers.forEach((m) => { m.x(0); m.y(0); m.r(+m.el.dataset.rot); });
+    });
+
     const enter = () => {
-      if (reduce) return;
-      gsap.from(items, { y: -140, opacity: 0, rotation: () => gsap.utils.random(-25, 25), duration: 0.9, ease: 'back.out(1.5)', stagger: 0.07 });
+      if (reduce) { follow = true; return; }
+      gsap.from(items, {
+        y: -140, opacity: 0, rotation: () => gsap.utils.random(-25, 25),
+        duration: 0.9, ease: 'back.out(1.5)', stagger: 0.07,
+        onComplete: () => { follow = true; },
+      });
     };
     new IntersectionObserver((es, io) => {
       if (es[0].isIntersecting) { enter(); io.disconnect(); }
     }, { threshold: 0.25 }).observe(area);
 
-    // Idle float on an inner wobble so it never fights the drag transform.
-    const bob = [];
+    // Idle float on the inner image so it never fights the cursor movement.
     if (!reduce) {
       items.forEach((el, i) => {
-        bob.push(gsap.to(el.firstElementChild, { y: gsap.utils.random(-8, 8), rotation: gsap.utils.random(-2, 2), duration: gsap.utils.random(2.2, 3.6), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i * 0.2 }));
+        gsap.to(el.firstElementChild, { y: gsap.utils.random(-8, 8), rotation: gsap.utils.random(-2, 2), duration: gsap.utils.random(2.2, 3.6), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i * 0.2 });
       });
     }
-
-    Draggable.create(items, {
-      type: 'x,y',
-      bounds: area,
-      inertia: true,
-      edgeResistance: 0.8,
-      cursor: 'grab',
-      activeCursor: 'grabbing',
-      onPress() {
-        this.target.style.zIndex = ++z;
-        gsap.to(this.target, { scale: 1.06, duration: 0.2 });
-        gsap.to(this.target.firstElementChild, { y: 0, rotation: 0, duration: 0.2, overwrite: true });
-      },
-      onRelease() {
-        gsap.to(this.target, { scale: 1, duration: 0.3, ease: 'back.out(2)' });
-      },
-      onDrag() { gsap.to(this.target, { rotation: +this.target.dataset.rot + this.deltaX * 0.3, duration: 0.2, overwrite: 'auto' }); },
-    });
   </script>
 </Base>
 
@@ -105,8 +113,8 @@ const photos = [
   .intro__bio p { font: var(--fs-bio)/1.3 var(--font-serif); margin: 0 0 20px; }
   .intro__link { margin-top: auto; width: fit-content; font: var(--fs-label) var(--font-mono); border-bottom: 1px solid currentColor; }
   .intro__link:hover { opacity: 0.5; }
-  .scatter { position: relative; height: 760px; max-width: var(--page-max); margin: 0 auto; overflow: hidden; touch-action: pan-y; }
-  .scatter__item { position: absolute; user-select: none; will-change: transform; touch-action: none; }
+  .scatter { position: relative; height: 760px; max-width: var(--page-max); margin: 0 auto; overflow: hidden; }
+  .scatter__item { position: absolute; user-select: none; will-change: transform; }
   .scatter__item :global(img) { width: 100%; height: auto; pointer-events: none; }
 
   @media (max-width: 900px) {
