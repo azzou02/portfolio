@@ -1,0 +1,80 @@
+---
+// Live dithered camera (8x8 Bayer, black + pink), same look as the old p5 sketch.
+// Falls back to an animated dithered gradient when there is no camera or access is denied.
+---
+<div class="dither" data-dither>
+  <canvas width="288" height="216" role="img" aria-label="Live dithered black and pink view of your camera, or an animated pattern if the camera is off."></canvas>
+  <p class="dither__note" hidden>camera off</p>
+</div>
+
+<script>
+  const root = document.querySelector('[data-dither]');
+  const canvas = root.querySelector('canvas');
+  const note = root.querySelector('.dither__note');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const W = canvas.width, H = canvas.height;
+  const pink = [255, 105, 210]; // --pink
+  const bayer = [
+    [0, 32, 8, 40, 2, 34, 10, 42], [48, 16, 56, 24, 50, 18, 58, 26],
+    [12, 44, 4, 36, 14, 46, 6, 38], [60, 28, 52, 20, 62, 30, 54, 22],
+    [3, 35, 11, 43, 1, 33, 9, 41], [51, 19, 59, 27, 49, 17, 57, 25],
+    [15, 47, 7, 39, 13, 45, 5, 37], [63, 31, 55, 23, 61, 29, 53, 21],
+  ];
+  const src = document.createElement('canvas');
+  src.width = W; src.height = H;
+  const sctx = src.getContext('2d', { willReadFrequently: true });
+  const out = ctx.createImageData(W, H);
+  let video = null;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function dither() {
+    const px = sctx.getImageData(0, 0, W, H).data;
+    let min = 255, max = 0;
+    const lum = new Float32Array(W * H);
+    for (let i = 0, j = 0; i < px.length; i += 4, j++) {
+      const l = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
+      lum[j] = l; if (l < min) min = l; if (l > max) max = l;
+    }
+    const range = max - min || 1;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const j = y * W + x, o = j * 4;
+      const b = Math.pow((lum[j] - min) / range, 0.8) * 255;
+      const on = b > ((bayer[y & 7][x & 7] + 0.5) / 64) * 255;
+      out.data[o] = on ? pink[0] : 0; out.data[o + 1] = on ? pink[1] : 0; out.data[o + 2] = on ? pink[2] : 0; out.data[o + 3] = 255;
+    }
+    ctx.putImageData(out, 0, 0);
+  }
+
+  function paintFallback(t) {
+    const g = sctx.createRadialGradient(W * (0.5 + 0.25 * Math.cos(t / 1800)), H * (0.5 + 0.25 * Math.sin(t / 1300)), 4, W / 2, H / 2, W * 0.6);
+    g.addColorStop(0, '#fff'); g.addColorStop(1, '#000');
+    sctx.fillStyle = g; sctx.fillRect(0, 0, W, H);
+  }
+
+  function frame(t) {
+    if (video && video.readyState >= 2) sctx.drawImage(video, 0, 0, W, H);
+    else paintFallback(reduce ? 0 : t);
+    dither();
+    if (video || !reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  if (navigator.mediaDevices?.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: { width: W, height: H }, audio: false })
+      .then((stream) => {
+        video = document.createElement('video');
+        video.srcObject = stream; video.muted = true; video.playsInline = true;
+        video.play();
+        if (reduce) requestAnimationFrame(frame);
+      })
+      .catch(() => { note.hidden = false; });
+  } else {
+    note.hidden = false;
+  }
+</script>
+
+<style>
+  .dither { position: relative; width: 100%; height: 100%; background: #000; }
+  canvas { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+  .dither__note { position: absolute; left: 14px; bottom: 12px; margin: 0; font: var(--fs-tiny) var(--font-mono); color: var(--pink); }
+</style>
