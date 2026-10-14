@@ -40,6 +40,11 @@ const { Content } = await render(entry);
     }, { rootMargin: '-20% 0px -70% 0px' });
     document.querySelectorAll('[data-section]').forEach((s) => links.has(s.id) && io.observe(s));
     set(links.keys().next().value);
+    // At the very bottom, always highlight the last section.
+    const last = [...links.keys()].pop();
+    addEventListener('scroll', () => {
+      if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) set(last);
+    }, { passive: true });
   </script>
 </Base>
 
@@ -57,6 +62,8 @@ const { Content } = await render(entry);
   .pills li { display: inline-flex; align-items: center; gap: 10px; height: 35px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: var(--radius-pill); background: var(--surface); font: 16px var(--font-sans); text-transform: uppercase; }
   .pills i { width: 15px; height: 15px; border-radius: 50%; background: var(--lavender); }
   .cs-body :global(.cs-section:first-child) { margin-top: 50px; }
+  /* Extra room after the last section so it can scroll up to the active zone. */
+  .cs-body :global(.cs-section:last-child) { min-height: 55vh; }
   @media (max-width: 900px) {
     .case { grid-template-columns: 1fr; padding: 24px 16px 80px; row-gap: 24px; }
     .case__side { position: static; padding-top: 0; }
