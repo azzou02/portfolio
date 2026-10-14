@@ -1,0 +1,189 @@
+---
+title: Turning a local newspaper into an all-in-one city app for Dayton
+cardTitle: Cox Enterprise Case Competition
+cardTags: [user research, design, business thinking]
+year: '2025'
+order: 1
+cover: ../../assets/dayton/hero.png
+coverPosition: 50% 0%
+heroAlt: Three phone screens from the Dayton Daily Life app on a blue background, showing Guides, account creation, and Transit.
+pills:
+  - { label: Winner, dot: true }
+  - { label: Case competition }
+  - { label: Mobile }
+toc:
+  - { id: introduction, label: Introduction }
+  - { id: problem, label: Problem }
+  - { id: research, label: Research }
+  - { id: key-decisions, label: Key decisions }
+  - { id: guide, label: Guide }
+  - { id: transit, label: Transit }
+  - { id: outcome, label: Outcome }
+  - { id: reflection, label: Reflection }
+meta:
+  - { label: Timeline, lines: ['Sept - Oct 2025'] }
+  - { label: My Role, lines: ['User Researcher', 'Designer'] }
+  - { label: Team, lines: ['Alison Zou (me!)', 'Vibha Durraikannan', 'Raymond Liu', 'Natasha Chang'] }
+  - { label: Tools, lines: ['Figma'] }
+---
+import Section from '../../components/case/Section.astro';
+import Fig from '../../components/case/Fig.astro';
+import Placeholder from '../../components/case/Placeholder.astro';
+import guide from '../../assets/dayton/guide.png';
+import onboarding from '../../assets/dayton/onboarding.png';
+import transit from '../../assets/dayton/transit.png';
+
+<Section id="introduction" label="Introduction">
+
+I designed the core screens of the Figma prototype for Dayton Daily Life, an all-in-one app that adds city guides, podcasts, transit, and a community forum to a local newspaper. Our team of four won the Cox Enterprise Case Competition among ~20 teams (Sept–Oct 2025). Judges said we clearly captured the market and the problem, connected our solution to Cox's other businesses, and landed on a podcast direction they were interested in.
+
+<p class="cs-note">Student concept, not affiliated with Dayton Daily News or Cox Enterprise.</p>
+
+<dl class="cs-meta">
+  <div><dt>Timeline</dt><dd>Sept - Oct 2025</dd></div>
+  <div><dt>My Role</dt><dd><span>User Researcher</span><span>Designer</span></dd></div>
+  <div><dt>Team</dt><dd><span>Alison Zou (me!)</span><span>Vibha Durraikannan</span><span>Raymond Liu</span><span>Natasha Chang</span></dd></div>
+  <div><dt>Tools</dt><dd>Figma</dd></div>
+</dl>
+
+<h3 class="cs-h2">What is Dayton Daily News?</h3>
+
+The Dayton Daily News (DDN) is the daily newspaper of Dayton, Ohio, and part of Cox Enterprises' portfolio. It delivers print to most of Montgomery and Miami counties and parts of Greene County, and sells digital access and home delivery.
+
+<ul class="cs-cards">
+  <li class="cs-card"><h4>Today’s Product</h4><p>A website and ePaper, a daily Morning Briefing newsletter, and subscriber-only games and puzzles.</p></li>
+  <li class="cs-card"><h4>Its Strength</h4><p>Our interviewees called it trustworthy, and one said it is the first result when she searches for Dayton news.</p></li>
+  <li class="cs-card"><h4>Its Challenge</h4><p>Print readership is shrinking, the paper is ending its Saturday print edition, and it has little pull with younger readers.</p></li>
+</ul>
+
+</Section>
+
+<Section id="problem" label="Problem" title="Grow a pro-print paper that is losing subscribers">
+
+DDN is losing subscribers and engagement, as legacy print is. The client is pro-print, so dropping the paper was not an option. The brief asked us to size the market, propose a cost-effective growth strategy, and use Cox's other businesses.
+
+<ol class="cs-steps">
+  <li><b>01</b>Size the market</li>
+  <li><b>02</b>Propose a cost-effective growth strategy</li>
+  <li><b>03</b>Use Cox’s other businesses</li>
+</ol>
+
+<h3 class="cs-h2">My Role</h3>
+
+I owned the Guides concept. In Figma I designed the onboarding flow (sign-in, login, register, interest selection) and the News, Guides, and Transit screens. A teammate designed Podcasts and Community. I also contributed to the interviews and helped with the market sizing.
+
+</Section>
+
+<Section id="research" label="Research" title="We interviewed 5 Dayton residents<br/>and presented 3 personas in our deck">
+
+From those conversations we built three personas spanning DDN's current and future readers:
+
+<ul class="cs-cards cols-2">
+  <li class="cs-card">
+    <h4>Relationship to News</h4>
+    <ol><li>TV news</li><li>Print news when he can find it</li><li>Would use phone if he had to; more comfortable with paper</li></ol>
+    <h4>Thoughts on DDN</h4>
+    <ol><li>Reads DDN every day</li><li>Purchases it from a news stand</li><li>Trustworthy</li></ol>
+    <h4>Dayton Culture</h4>
+    <ol><li>“Big small town”</li><li>Small city charm, holding onto tradition (like paper news)</li></ol>
+  </li>
+  <li class="cs-card">
+    <h4>Relationship to News</h4>
+    <ol><li>Daily emails of news summary</li><li>Primarily digital on phone</li></ol>
+    <h4>Wants</h4>
+    <ol><li>More content, less ads</li><li>Things to do in town with his wife</li><li>Updates on local sports teams</li><li>Traffic updates + highway closures</li><li>Misses local radio and discussion of local issues in the car</li></ol>
+    <h4>Dayton Culture</h4>
+    <ol><li>Small big city</li><li>Transient: people coming and going (Air Force Base, colleges)</li></ol>
+  </li>
+</ul>
+
+<ul class="cs-cards cols-2" style={{"--cols":1}}>
+  <li class="cs-card" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"24px"}}>
+    <div>
+      <h4>Thoughts on DDN</h4>
+      <ol><li>Good source of information; first result on searches</li><li>Sees DDN content on her social media reel</li><li>Active in the comments</li><li>Wants an online forum for Dayton discussion</li></ol>
+    </div>
+    <div>
+      <h4>Dayton Culture</h4>
+      <ol><li>Large suburbs with diverse people</li><li>Active population (e.g. school board elections)</li><li>Downtown is coming back as the city invests in places to hang out</li><li>Many people move away but come back to settle</li></ol>
+    </div>
+  </li>
+</ul>
+
+Industry data pointed the same way: only 4% of Americans prefer print news, and the digital segment is the one growing (Pew, Statista).
+
+<div class="cs-stats">
+  <div class="cs-stat"><strong>4%</strong><span>of Americans prefer print news</span></div>
+  <div class="cs-stat"><strong>~78k</strong><span>addressable market across print and digital</span></div>
+</div>
+
+</Section>
+
+<Section id="key-decisions" label="Key decisions" title="Grow new readers, don't convert print readers">
+
+Print is part of Dayton's identity, and the growth was in people DDN wasn't reaching. We targeted 25–40-year-olds with an all-in-one app that opens on familiar DDN news, then adds four tabs: Guides, Podcasts, Transit, and Community.
+
+<Placeholder label="diagram - app structure" />
+
+</Section>
+
+<Section id="guide" label="Design - Guides + onboarding" title="Guides turns DDN's local trust into a daily-use tool">
+
+98% of residents search online for local businesses and services, and 75% worry about fake reviews (BrightLocal, 2025).
+
+<ul class="cs-cards cols-2">
+  <li class="cs-card cs-mock">
+    <div class="tabs">
+      <span>Top Tabs</span>
+      <div class="bar"><span class="on">Weekend Playbook</span><span>Life Hacks</span><span>Food &amp; Drink Scene</span></div>
+      <span>Chips</span>
+      <div class="chips" style={{marginTop:"8px"}}><span class="on">Dates</span><span>Family Fun</span><span>Outdoors</span><span>Arts &amp; Culture</span></div>
+    </div>
+    <h4>Structure</h4>
+    <p>Top tabs mirror what interviewees wanted to do. Chips narrow within each tab.</p>
+  </li>
+  <li class="cs-card cs-mock">
+    <div class="tier"><div>Free</div><div>Under $25</div><div>Splurge Worthy</div></div>
+    <h4>Budget Tiers</h4>
+    <p>Sections are grouped as Free, Under $25, and Splurge Worthy.</p>
+  </li>
+</ul>
+
+<Fig src={guide} alt="Two Guides screens: the Weekend Playbook feed with an Active Dates article, and a list of guides grouped under Free, Under $25, and Splurge Worthy." tone="dark" />
+
+<h3 class="cs-h3">Onboarding</h3>
+
+A Select Interests screen personalizes the feed after sign-up, with a Skip option so it never blocks entry. Social sign-in (Google, Apple, Facebook) keeps registration short.
+
+<Placeholder label="diagram - onboarding flow" />
+
+<Fig src={onboarding} alt="Four onboarding screens: continue with email or social sign-in, create account, log in, and Select Interests with a Skip option." tone="blue" />
+
+</Section>
+
+<Section id="transit" label="Design - Transit" title="Two tabs built on data that already exists">
+
+Transit has two tabs. Traffic shows a live map and incident alerts. Transportation covers bike paths, bus schedule, walking routes, road closures, and cheapest gas. It relies on data that already exists from ODOT OHGO, GDRTA, and AAA, so it is buildable.
+
+<Fig src={transit} alt="Two Transit screens: the Transportation tab with Bike Paths, Bus Schedule, Walking Routes and Road Closures, and the Traffic tab with a live map of the Dayton area." tone="dark" />
+
+</Section>
+
+<Section id="outcome" label="Outcome">
+
+<div class="cs-outcome">
+  <div><strong>1st</strong><span>of ~20 teams</span></div>
+  <p>We won among ~20 teams. The judges said we clearly captured the market and the problem, tied our solution to Cox's other companies, and landed on a podcast direction they were already interested in.</p>
+</div>
+
+</Section>
+
+<Section id="reflection" label="Reflection" title="What I’d do differently">
+
+<ol class="cs-list">
+  <li><span class="n">01</span><div><h4>Rethink Transit</h4><p>Traffic came up often in interviews, but live traffic is a utility, not news. I would test whether commuters come back for it, and tie alerts to local reporting.</p></div></li>
+  <li><span class="n">02</span><div><h4>Add a localized news view</h4><p>People value hyper-local coverage, so a page organized by neighborhood or city would strengthen the core product.</p></div></li>
+  <li><span class="n">03</span><div><h4>Prototype the paywall and test with real users</h4><p>We did not prototype how Guides would be gated, and we did not test with 25–40-year-olds. I would do both before building.</p></div></li>
+</ol>
+
+</Section>

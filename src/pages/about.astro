@@ -1,6 +1,127 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import Dither from '../components/Dither.astro';
+import cake from '../assets/about/abt-cake.png';
+import comp from '../assets/about/abt-comp.png';
+import goggle from '../assets/about/abt-goggle.png';
+import ski from '../assets/about/abt-ski.png';
+import snoopy from '../assets/about/abt-snoopy.png';
+import cards from '../assets/about/abt-cards.png';
+import matcha from '../assets/about/abt-matcha.png';
+import miffy from '../assets/about/abt-miffy.png';
+import mountain from '../assets/about/abt-mountain.png';
+
+// x / y are % of the scatter area, rot in degrees, w in px (desktop).
+const photos = [
+  { src: cake, alt: 'Line drawing of a slice of cake with a black cherry on top.', x: 4, y: 12, rot: -6, w: 200 },
+  { src: comp, alt: 'Line drawing of an open laptop.', x: 30, y: 5, rot: 4, w: 200 },
+  { src: goggle, alt: 'Line drawing of ski goggles.', x: 58, y: 18, rot: -3, w: 190 },
+  { src: ski, alt: 'Line drawing of a signpost reading Ski Patrol, Ski Lift and Apres Ski.', x: 75, y: 8, rot: 7, w: 210 },
+  { src: snoopy, alt: 'Line drawing of a cartoon beagle with arms stretched wide.', x: 45, y: 45, rot: -5, w: 230 },
+  { src: cards, alt: 'Line drawing of two playing cards, one with cats on it.', x: 18, y: 45, rot: 5, w: 230 },
+  { src: matcha, alt: 'Line drawing of an iced matcha in a to-go cup.', x: 65, y: 50, rot: -4, w: 185 },
+  { src: miffy, alt: 'Line drawing of a cartoon rabbit in a flowered dress.', x: 82, y: 54, rot: 3, w: 210 },
+  { src: mountain, alt: 'Line drawing of a snowy mountain and sun.', x: 32, y: 62, rot: -7, w: 220 },
+];
 ---
-<Base title="About · Alison Zou">
-  <main class="stub">about: placeholder, built in a later step</main>
+<Base title="About · Alison Zou" description="Alison Zou is a software developer, art creator, and digital expressionist living in Nashville, TN.">
+  <main class="about">
+    <section class="intro">
+      <div class="intro__cam"><Dither /></div>
+      <div class="intro__bio">
+        <p>Alison Zou is a software developer, art creator, and digital expressionist living in Nashville, TN.</p>
+        <p>She is a senior at Vanderbilt University studying Computer Science, Math, and Fine Arts. She is also available for volunteer and freelance work.</p>
+        <p>In spare time she works on personal projects and loves cafe hunting. She also loves traveling to hike and see all of nature.</p>
+        <p>She recently completed her software engineering internship at Goldman Sachs, and she believes community is key.</p>
+        <a class="intro__link" href="https://www.linkedin.com/in/alison-zou/" target="_blank" rel="noopener">linkedin ↗</a>
+      </div>
+    </section>
+
+    <section class="scatter" id="scatter" aria-label="Things I like">
+      {photos.map((p) => (
+        <div class="scatter__item" data-rot={p.rot} style={`left:${p.x}%;top:${p.y}%;width:${p.w}px`}>
+          <Image src={p.src} alt={p.alt} widths={[p.w, p.w * 2]} sizes={`${p.w}px`} format="webp" quality={85} draggable="false" />
+        </div>
+      ))}
+    </section>
+  </main>
+
+  <script>
+    import { gsap } from 'gsap';
+
+    const area = document.getElementById('scatter');
+    const items = [...area.querySelectorAll('.scatter__item')];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    items.forEach((el) => gsap.set(el, { rotation: +el.dataset.rot }));
+
+    // Items lean toward the cursor; bigger ones move more. Starts after the entrance.
+    let follow = false;
+    const movers = items.map((el) => ({
+      el,
+      k: 0.1 + (parseFloat(el.style.width) - 185) / 45 * 0.08,
+      x: gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3.out' }),
+      y: gsap.quickTo(el, 'y', { duration: 0.9, ease: 'power3.out' }),
+      r: gsap.quickTo(el, 'rotation', { duration: 0.9, ease: 'power3.out' }),
+    }));
+    const MAX = 70;
+    const clamp = (v) => Math.max(-MAX, Math.min(MAX, v));
+
+    area.addEventListener('pointermove', (e) => {
+      if (!follow || reduce) return;
+      const box = area.getBoundingClientRect();
+      const mx = e.clientX - box.left, my = e.clientY - box.top;
+      movers.forEach((m) => {
+        const cx = m.el.offsetLeft + m.el.offsetWidth / 2;
+        const cy = m.el.offsetTop + m.el.offsetHeight / 2;
+        m.x(clamp((mx - cx) * m.k));
+        m.y(clamp((my - cy) * m.k));
+        m.r(+m.el.dataset.rot + clamp((mx - cx) * m.k) * 0.08);
+      });
+    });
+    area.addEventListener('pointerleave', () => {
+      movers.forEach((m) => { m.x(0); m.y(0); m.r(+m.el.dataset.rot); });
+    });
+
+    const enter = () => {
+      if (reduce) { follow = true; return; }
+      gsap.from(items, {
+        y: -140, opacity: 0, rotation: () => gsap.utils.random(-25, 25),
+        duration: 0.9, ease: 'back.out(1.5)', stagger: 0.07,
+        onComplete: () => { follow = true; },
+      });
+    };
+    new IntersectionObserver((es, io) => {
+      if (es[0].isIntersecting) { enter(); io.disconnect(); }
+    }, { threshold: 0.25 }).observe(area);
+
+    // Idle float on the inner image so it never fights the cursor movement.
+    if (!reduce) {
+      items.forEach((el, i) => {
+        gsap.to(el.firstElementChild, { y: gsap.utils.random(-8, 8), rotation: gsap.utils.random(-2, 2), duration: gsap.utils.random(2.2, 3.6), ease: 'sine.inOut', repeat: -1, yoyo: true, delay: i * 0.2 });
+      });
+    }
+  </script>
 </Base>
+
+<style>
+  .about { background: var(--paper); }
+  .intro { display: grid; grid-template-columns: 40% 60%; height: 600px; border-bottom: 1px solid var(--ink); }
+  .intro__cam { background: #000; overflow: hidden; }
+  .intro__bio { padding: 48px 56px; display: flex; flex-direction: column; max-width: 760px; }
+  .intro__bio p { font: var(--fs-bio)/1.3 var(--font-serif); margin: 0 0 20px; }
+  .intro__link { margin-top: auto; width: fit-content; font: var(--fs-label) var(--font-mono); border-bottom: 1px solid currentColor; }
+  .intro__link:hover { opacity: 0.5; }
+  .scatter { position: relative; height: 760px; max-width: var(--page-max); margin: 0 auto; overflow: hidden; }
+  .scatter__item { position: absolute; user-select: none; will-change: transform; }
+  .scatter__item :global(img) { width: 100%; height: auto; pointer-events: none; }
+
+  @media (max-width: 900px) {
+    .intro { grid-template-columns: 1fr; height: auto; }
+    .intro__cam { height: 56vw; }
+    .intro__bio { padding: 28px 20px; }
+    .scatter { height: 820px; }
+    .scatter__item { width: 38vw !important; }
+  }
+</style>

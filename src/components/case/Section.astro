@@ -1,0 +1,9 @@
+---
+// A labelled case-study section: mono label, rule, then content.
+const { id, label, title } = Astro.props;
+---
+<section class="cs-section" id={id} data-section>
+  <p class="cs-label">{label}</p>
+  {title && <h2 class="cs-h2" set:html={title} />}
+  <slot />
+</section>

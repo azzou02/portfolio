@@ -1,0 +1,74 @@
+/* Case-study content styles. Global so MDX bodies can use plain HTML + classes. */
+.cs-section { margin-top: 70px; scroll-margin-top: 24px; }
+.cs-body .cs-label { font: 14px/1 var(--font-mono); text-transform: uppercase; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
+.cs-h2 { font: 400 var(--fs-h2)/1.25 var(--font-sans); font-variation-settings: 'opsz' 14; margin: 0 0 14px; }
+.cs-h3 { font: 400 var(--fs-h3)/1.25 var(--font-sans); font-variation-settings: 'opsz' 14; margin: 28px 0 8px; }
+.cs-body > section > p, .cs-body .cs-p { font: var(--fs-body)/var(--lh-body, 1.2) var(--font-serif); margin: 0 0 14px; }
+.cs-body .cs-note { font: 14px/1.3 var(--font-serif); color: var(--ink-muted); margin: 0 0 24px; }
+.cs-meta { display: flex; flex-wrap: wrap; gap: 20px 50px; background: var(--surface); border-radius: var(--radius-lg); padding: 31px 31px 38px; margin: 30px 0 40px; }
+.cs-meta dt { font: 14px/1 var(--font-mono); color: var(--ink-muted); margin-bottom: 10px; }
+.cs-meta dd { margin: 0; font: 16px/1.15 var(--font-serif); }
+.cs-meta dd span { display: block; }
+
+.cs-cards { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 21px; margin: 24px 0; list-style: none; padding: 0; }
+.cs-cards.cols-2 { --cols: 2; }
+.cs-card { background: var(--surface); border-radius: var(--radius-lg); padding: 20px; }
+.cs-card h4 { font: 400 14px/1.3 var(--font-mono); color: var(--ink-muted); margin: 0 0 8px; }
+.cs-body .cs-card p { font: 16px/1.2 var(--font-serif); margin: 0; }
+.cs-card ol, .cs-card ul { font: 14px/1.3 var(--font-sans); padding-left: 20px; margin: 0 0 14px; }
+.cs-card li { margin-bottom: 2px; }
+
+.cs-steps { display: grid; grid-template-columns: repeat(var(--cols, 3), 1fr); border: 1px solid var(--border-strong); border-radius: var(--radius-card); margin: 24px 0; list-style: none; padding: 0; overflow: hidden; }
+.cs-steps li { padding: 16px 18px 20px; font: 14px/1.3 var(--font-mono); }
+.cs-steps li + li { border-left: 1px solid var(--border-strong); }
+.cs-steps b { display: block; font-weight: 400; margin-bottom: 8px; }
+.cs-steps.cols-4 { --cols: 4; }
+
+.cs-stats { display: grid; grid-template-columns: repeat(var(--cols, 2), 1fr); gap: 12px; margin: 24px 0; }
+.cs-stat { border: 1px solid var(--border-strong); border-radius: var(--radius-card); padding: 16px 20px; }
+.cs-stat strong { display: block; font: italic 400 var(--fs-stat)/1 var(--font-stat); }
+.cs-stat span { font: 14px/1.3 var(--font-mono); }
+
+.cs-roles { display: grid; grid-template-columns: 190px 1fr; gap: 14px 24px; margin: 20px 0; font: var(--fs-body)/1.2 var(--font-serif); }
+.cs-roles dt { background: var(--surface); border-radius: var(--radius-pill); padding: 4px 14px; width: fit-content; height: fit-content; font-family: var(--font-sans); font-size: 16px; }
+.cs-roles dd { margin: 0; }
+
+.cs-fig { margin: 24px 0; border-radius: var(--radius-lg); overflow: hidden; display: flex; justify-content: center; }
+.cs-fig img { display: block; max-width: 100%; height: auto; }
+.cs-fig--blue { background: #2a669c; padding: 24px; }
+.cs-fig--dark { background: #353535; padding: 24px 24px 0; }
+.cs-fig--surface { background: var(--surface); }
+.cs-phones { list-style: none; padding: 0; margin: 24px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px 12px; }
+.cs-phones li:nth-child(n+5) { grid-column: span 2; display: flex; }
+.cs-phones li:nth-child(5) { justify-content: flex-end; }
+.cs-phones li:nth-child(6) { justify-content: flex-start; }
+.cs-phones img { width: 100%; max-width: 170px; height: auto; display: block; }
+.cs-placeholder { background: var(--surface); border-radius: var(--radius-lg); min-height: 200px; display: grid; place-items: center; font: 14px var(--font-serif); margin: 24px 0; }
+
+.cs-list { list-style: none; padding: 0; margin: 20px 0; counter-reset: n; }
+.cs-list li { display: grid; grid-template-columns: 150px 1fr; gap: 12px; margin-bottom: 26px; }
+.cs-list .n { font: 14px/1.6 var(--font-mono); }
+.cs-list h4 { font: 400 var(--fs-h3)/1.2 var(--font-sans); margin: 0 0 6px; }
+.cs-body .cs-list p { font: var(--fs-body)/1.2 var(--font-serif); margin: 0; }
+.cs-outcome { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: center; margin: 20px 0; }
+.cs-outcome strong { display: block; font: italic 400 var(--fs-stat)/1 var(--font-stat); }
+.cs-outcome span { font: 14px var(--font-mono); }
+.cs-body .cs-outcome p { font: var(--fs-body)/1.2 var(--font-serif); margin: 0; }
+
+.cs-mock { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.cs-mock .tabs { background: #dcdcdc; border-radius: 8px; padding: 12px; font: 12px var(--font-mono); }
+.cs-mock .bar { white-space: nowrap; gap: 10px; font-size: 11px; background: #fff; border-radius: 4px; padding: 8px 10px; display: flex; font-family: var(--font-sans); margin: 6px 0 10px; }
+.cs-mock .bar .on { color: #2a669c; border-bottom: 1px solid #2a669c; }
+.cs-mock .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.cs-mock .chips span { background: #fff; border-radius: 999px; padding: 4px 10px; font: 12px var(--font-sans); }
+.cs-mock .chips .on { background: #2a669c; color: #fff; }
+.cs-mock .tier { border: 1px solid var(--ink); background: #fff; font: 14px var(--font-mono); }
+.cs-mock .tier div { padding: 8px 10px; } .cs-mock .tier div + div { border-top: 1px solid var(--border-strong); }
+
+@media (max-width: 900px) {
+  .cs-cards, .cs-steps, .cs-stats, .cs-roles, .cs-list li, .cs-outcome { grid-template-columns: 1fr; }
+  .cs-steps li + li { border-left: 0; border-top: 1px solid var(--border-strong); }
+  .cs-steps.cols-4 { --cols: 1; }
+  .cs-phones { grid-template-columns: repeat(2, 1fr); }
+  .cs-phones li:nth-child(n+5) { grid-column: auto; }
+}

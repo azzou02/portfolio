@@ -1,0 +1,172 @@
+---
+title: Flag Football Recruitment in a Box
+cardTitle: RecruitSync
+cardTags: [user research, design, business thinking]
+year: '2025'
+order: 2
+cover: ../../assets/recruitsync/hero.png
+coverPosition: 50% 50%
+heroAlt: RecruitSync mobile app screens showing course lessons and athlete recruiting tools.
+pills:
+  - { label: Internship, dot: true }
+  - { label: PRD + research }
+  - { label: Mobile }
+toc:
+  - { id: introduction, label: Introduction }
+  - { id: my-role, label: My role }
+  - { id: research, label: Research }
+  - { id: key-decisions, label: Key decisions }
+  - { id: design, label: Design }
+  - { id: launch, label: Launch }
+  - { id: outcome, label: Outcome }
+  - { id: reflection, label: Reflection }
+meta:
+  - { label: Timeline, lines: ['Aug - Dec 2025'] }
+  - { label: My Role, lines: ['Product Dev Intern'] }
+  - { label: Team, lines: ['Alison Zou (me!)', 'Serena', 'Sophie'] }
+  - { label: Tools, lines: ['Figma, Mixpanel'] }
+---
+import Section from '../../components/case/Section.astro';
+import Phones from '../../components/case/Phones.astro';
+import parent from '../../assets/recruitsync/phone-parent.png';
+import athlete from '../../assets/recruitsync/phone-athlete.png';
+import course from '../../assets/recruitsync/phone-course-details.png';
+import lesson from '../../assets/recruitsync/phone-lesson-details.png';
+import task from '../../assets/recruitsync/phone-task-details.png';
+import upload from '../../assets/recruitsync/phone-video-upload.png';
+
+<Section id="introduction" label="Introduction">
+
+I interviewed 5 athletes, parents, and coaches to find out why families dropped off RecruitSync's 7-day free trial. Then I co-wrote the 20+ page PRD for RecruitSync University, an in-app education platform, and designed its mobile screens in Figma. I wrote the launch marketing and notification strategy, and I contributed to the Mixpanel measurement plan.
+
+<dl class="cs-meta">
+  <div><dt>Timeline</dt><dd>Aug - Dec 2025</dd></div>
+  <div><dt>My Role</dt><dd>Product Dev Intern</dd></div>
+  <div><dt>Team</dt><dd><span>Alison Zou (me!)</span><span>Serena</span><span>Sophie</span></dd></div>
+  <div><dt>Tools</dt><dd>Figma, Mixpanel</dd></div>
+</dl>
+
+<h3 class="cs-h2">What is RecruitSync?</h3>
+
+RecruitSync is a mobile app that helps athletes navigate college recruiting. It was already used for football, and the company wanted to expand to girls' flag football, which is the market our team worked on. Athletes build profiles and upload highlight video, and they can search colleges on a map. New users get a 7-day free trial before a paid subscription starts.
+
+<ul class="cs-cards cols-2">
+  <li class="cs-card"><h4>The Problem</h4><p>Users were dropping off after sign-up, and the team didn't know why they weren't converting from trial to paid.</p></li>
+  <li class="cs-card"><h4>The Context</h4><p>Girls' flag football recruiting is new and full of noise and misinformation, so families struggled to understand how it works.</p></li>
+</ul>
+
+</Section>
+
+<Section id="my-role" label="My role" title="Research, design, and launch strategy">
+
+I worked with two other interns and reported directly to the founder.
+
+<dl class="cs-roles">
+  <dt>I conducted</dt><dd>the 5 user interviews.</dd>
+  <dt>I wrote</dt><dd>the launch marketing and notification strategy, and the user workflows.</dd>
+  <dt>I designed</dt><dd>all the mobile screens in Figma, including the athlete and parent Course Central, course detail, and lesson detail screens.</dd>
+  <dt>I contributed to</dt><dd>the Mixpanel measurement plan (funnel and engaged vs. non-engaged cohorts).</dd>
+  <dt>The other two interns wrote</dt><dd>the remaining PRD sections.</dd>
+</dl>
+
+</Section>
+
+<Section id="research" label="Research" title="Families didn't understand how<br/>recruiting works">
+
+I recruited 5 interviewees (athletes, parents, and coaches) through cold emails and personal connections.
+
+<div class="cs-stats" style={{"--cols":1,maxWidth:"220px"}}><div class="cs-stat"><strong>5</strong><span>interviews</span></div></div>
+
+The clearest finding was a lack of clarity. Families didn't understand how the recruiting process works or which schools have programs. They also didn't know about RecruitSync's premium features, so they had little reason to pay after the trial.
+
+That led to three needs, which became the PRD's goals:
+
+<ol class="cs-steps">
+  <li><b>01</b>Clear, trustworthy education about the recruiting process.</li>
+  <li><b>02</b>Reliable data to reduce uncertainty and guide decisions.</li>
+  <li><b>03</b>A better marketing strategy to promote premium features.</li>
+</ol>
+
+</Section>
+
+<Section id="key-decisions" label="Key decisions" title="A course-style checklist">
+
+We built RecruitSync University as a tab of courses with lessons and tasks, designed as a more comprehensive checklist. The goal was to be in-depth enough to help, but simple to check off:
+
+<ul class="cs-cards">
+  <li class="cs-card"><h4>Choose your focus</h4><p>Families can target the areas they need (timelines, film, program fit, camps and visits, communication, scholarships) rather than follow one fixed path.</p></li>
+  <li class="cs-card"><h4>In depth but simple to check off</h4><p>Each lesson or task has a completion status and the course shows a progress ring, so users can see how far they've come.</p></li>
+  <li class="cs-card"><h4>Two tracks</h4><p>Athletes and parents share concepts but get a different order and emphasis. The parent track adds modules on financial planning and scholarships and on evaluating time commitment.</p></li>
+</ul>
+
+</Section>
+
+<Section id="design" label="Design" title="Course Central, course detail, lesson detail">
+
+I designed the mobile screens in Figma, with a dark header, a light content area, and yellow accents for progress and completion.
+
+<Phones items={[
+  { src: parent, alt: 'Parent Course Central: shortcuts, Top Courses, and an All Courses list with progress bars.' },
+  { src: athlete, alt: 'Athlete Course Central with the same layout and athlete-specific courses.' },
+  { src: course, alt: 'Course details with a progress ring, course introduction, and lessons with Completed badges.' },
+  { src: lesson, alt: 'Lesson details with a video, lesson progress bar, and comments.' },
+  { src: task, alt: 'Task screen asking the athlete to search colleges on a map and view their camps and programs.' },
+  { src: upload, alt: 'Task screen for choosing highlight videos to upload to the athlete profile.' },
+]} />
+
+<h3 class="cs-h3">Course central</h3>
+
+Separate athlete and parent versions: shortcuts for Favorites, Recommended, and Advanced; a Top Courses row for beginners; and an All Courses list with a progress bar on each card. The parent version swaps in parent-specific courses such as "How to Help Your Child."
+
+<h3 class="cs-h3">Course details</h3>
+
+A progress ring with tasks and videos remaining, a course introduction, and a list of lessons and tasks with a status badge on each (for example Completed).
+
+<h3 class="cs-h3">Lesson Details</h3>
+
+A video, a lesson progress bar, and a comment section with likes and replies, so users can learn from each other.
+
+</Section>
+
+<Section id="launch" label="Launch and measurement" title="Bringing users back to the University">
+
+I wrote the launch marketing and notification strategy, because many users didn't know the University existed or forgot to return after onboarding. It includes:
+
+<ul class="cs-cards cols-2">
+  <li class="cs-card"><h4>Module start nudges</h4><p>for users who signed up but never began.</p></li>
+  <li class="cs-card"><h4>Progress reminders</h4><p>for users who stopped mid-module.</p></li>
+  <li class="cs-card"><h4>Milestone celebrations</h4><p>after a first lesson.</p></li>
+  <li class="cs-card"><h4>Value-focused tips</h4><p>that hint at the next section without teaching it.</p></li>
+</ul>
+
+To measure whether it worked, the PRD sets a north star of the percentage of athletes who complete a full learning path, tracked in Mixpanel with this funnel:
+
+<ol class="cs-steps cols-4">
+  <li><b>01</b>Onboarding</li>
+  <li><b>02</b>First module view</li>
+  <li><b>03</b>Module completion</li>
+  <li><b>04</b>Paid conversion</li>
+</ol>
+
+It also compares users who viewed one or more modules against users who viewed none, on day-7 retention and trial-to-paid conversion.
+
+</Section>
+
+<Section id="outcome" label="Outcome">
+
+<div class="cs-outcome">
+  <div><strong>20+</strong><span>page PRD delivered</span></div>
+  <p>I delivered the PRD and the Figma designs to the founder, who responded with "looks great." I don't know what happened to RecruitSync University after I handed it off, so I can't report launch results or conversion changes.</p>
+</div>
+
+</Section>
+
+<Section id="reflection" label="Reflection" title="What I’d do differently">
+
+<ol class="cs-list">
+  <li><span class="n">01</span><div><h4>Test the screens before handoff</h4><p>I received no feedback on the designs, so I'd run a quick walkthrough with a few athletes and parents from the interviews to check that the checklist structure is easy to follow.</p></div></li>
+  <li><span class="n">02</span><div><h4>Set a baseline first</h4><p>The PRD defines the metrics (completion, retention, trial-to-paid conversion), but I'd ask for the current trial-to-paid rate up front so impact could be measured.</p></div></li>
+  <li><span class="n">03</span><div><h4>Interview more people</h4><p>Five interviews showed a clear pattern, but I'd add more coaches and parents to see if it holds.</p></div></li>
+</ol>
+
+</Section>
