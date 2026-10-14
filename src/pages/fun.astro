@@ -1,6 +1,106 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+
+// Pick up every image in the folder, so adding one is just dropping a file in.
+const files = import.meta.glob('../assets/fun/*.{png,jpg,webp}', { eager: true });
+const img = (name) => files[`../assets/fun/${name}`].default;
+
+// Figma's five-slot block (flowers, ring grid, mass, frog, monkeys).
+const slots = {
+  flowers: { src: img('flowers.png'), alt: 'Grid of nine cartoon flowers with googly eyes on a lavender background.' },
+  rings: { src: img('ring-grid.png'), alt: 'Grid of colorful concentric rings on black.' },
+  mass: { src: img('mass1.png'), alt: 'Rows of purple silhouettes of people, each looking at a phone that beams a yellow light where the face would be.' },
+  frog: { src: img('frog.png'), alt: 'Pixel-style illustration of a green frog standing next to a white house with a pink roof.' },
+  monkeys: { src: img('monkeys.png'), alt: 'Strip of illustrated monkeys walking on a pink background.' },
+};
+
+// Everything else flows in the masonry grid below, in this order. 'video' marks the clip.
+const grid = [
+  ['lnyf-poster.webp', 'Lunar New Year Festival poster with a golden snake on a log among water lilies.'],
+  ['flamingo.webp', 'Painting of flamingos wading among lily pads with mountains behind.'],
+  ['video'],
+  ['self-port.webp', 'Painted portrait of a woman in a white headscarf and green collar.'],
+  ['halloween.webp', 'Trick or Treat Party poster with three figures wearing pumpkin heads.'],
+  ['strawberries.png', 'Dithered blue grid of strawberry and heart shapes.'],
+  ['duck.webp', 'Painting of a duck sitting on a nest of eggs among reeds.'],
+  ['friends-giving.webp', 'Friends Giving poster with a large striped gourd on an orange background.'],
+  ['still-life.webp', 'Still life painting of a copper pitcher, pears and a mango on a red table.'],
+  ['people-variation.webp', 'Repeating profile faces in purple, blue and yellow with the text "There are in fact no masses, but only ways of seeing people as masses."'],
+  ['masks.webp', 'Still life painting of masks, a mandolin and bottles on a harlequin cloth.'],
+  ['racing.webp', 'VandyHacks racing tournament poster with rubber ducks driving toy cars.'],
+  ['eye.webp', 'Mixed media artwork of a painted eye inside a window on a dark background.'],
+  ['protein-factory.webp', 'Isometric illustration of a factory with small workers on a yellow background.'],
+  ['mondrian.webp', 'Mondrian-style composition of black lines with red, blue and yellow blocks.'],
+  ['sculpture.webp', 'Relief sculpture of a carved profile with an ornate headdress.'],
+  ['Tutor-Nashville.jpg', 'Tutor Nashville logo: an open book character with eyes and a blue nose.'],
+  ['work2.webp', 'Illustration of a mirror reflecting a plant shape, surrounded by leaves and molecules.'],
+  ['flying.webp', 'Painting of a duck taking off from a rock in blue water.'],
+  ['cell-press.webp', 'Cell Press cover for Trends in Molecular Medicine with a white line drawing of a brain.'],
+  ['Cloud_Computing_Poster2.webp', 'Developing On Cloud Nine poster with rubber ducks on clouds.'],
+  ['lady-port.webp', 'Painted portrait of a smiling woman with a snake around her shoulders and hawks overhead.'],
+  ['sunburst.webp', 'Yellow sunburst of thin rays on white.'],
+];
 ---
-<Base title="Fun · Alison Zou">
-  <main class="stub">fun: placeholder, built in a later step</main>
+<Base title="Fun · Alison Zou" description="Paintings, graphics, and code experiments by Alison Zou.">
+  <main class="fun">
+    <section class="slots" aria-label="Featured work">
+      <div class="slots__left">
+        <div class="slots__pair">
+          <Image src={slots.flowers.src} alt={slots.flowers.alt} widths={[265, 530]} sizes="(min-width: 900px) 22vw, 50vw" format="webp" loading="eager" />
+          <Image src={slots.rings.src} alt={slots.rings.alt} widths={[265, 530]} sizes="(min-width: 900px) 22vw, 50vw" format="webp" loading="eager" />
+        </div>
+        <Image class="slots__frog" src={slots.frog.src} alt={slots.frog.alt} widths={[550, 1100]} sizes="(min-width: 900px) 43vw, 100vw" format="webp" loading="eager" />
+      </div>
+      <div class="slots__right">
+        <Image class="slots__mass" src={slots.mass.src} alt={slots.mass.alt} widths={[648, 1296]} sizes="(min-width: 900px) 51vw, 100vw" format="webp" loading="eager" />
+        <Image class="slots__monkeys" src={slots.monkeys.src} alt={slots.monkeys.alt} widths={[648, 1296]} sizes="(min-width: 900px) 51vw, 100vw" format="webp" loading="eager" />
+      </div>
+    </section>
+
+    <section class="masonry" aria-label="More work">
+      {grid.map(([name, alt]) => name === 'video' ? (
+        <div class="masonry__item">
+          <video class="clip" autoplay muted loop playsinline preload="metadata" poster="/fun/mass-poster.jpg" aria-label="Looping animation of purple silhouettes looking at glowing phones.">
+            <source src="/fun/mass.webm" type="video/webm" />
+            <source src="/fun/mass.mp4" type="video/mp4" />
+          </video>
+        </div>
+      ) : (
+        <div class="masonry__item">
+          <Image src={img(name)} alt={alt} widths={[400, 800]} sizes="(min-width: 900px) 33vw, 50vw" format="webp" quality={82} loading="lazy" />
+        </div>
+      ))}
+    </section>
+  </main>
+
+  <script>
+    // Respect reduced motion: show the poster frame instead of autoplaying.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('video.clip').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+    }
+  </script>
 </Base>
+
+<style>
+  .fun { max-width: var(--page-max); margin: 0 auto; padding: 33px 33px 80px 29px; }
+  .slots { display: flex; gap: 20px; align-items: flex-start; }
+  .slots__left { flex: 550 1 0; display: flex; flex-direction: column; gap: 21px; min-width: 0; }
+  .slots__right { flex: 648 1 0; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .slots__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .slots :global(img) { width: 100%; height: auto; }
+  .slots__pair :global(img) { aspect-ratio: 1; object-fit: cover; }
+  .slots__frog { aspect-ratio: 550 / 359; object-fit: cover; }
+
+  .masonry { columns: 3; column-gap: 20px; margin-top: 40px; }
+  .masonry__item { break-inside: avoid; margin: 0 0 20px; }
+  .masonry__item :global(img), .clip { width: 100%; height: auto; display: block; }
+
+  @media (max-width: 900px) {
+    .fun { padding: 20px 16px 60px; }
+    .slots { flex-direction: column; }
+    .slots__left, .slots__right { flex: none; width: 100%; }
+    .masonry { columns: 2; column-gap: 12px; }
+    .masonry__item { margin-bottom: 12px; }
+  }
+</style>
