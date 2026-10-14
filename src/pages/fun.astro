@@ -1,6 +1,83 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+
+// Pick up every image in the folder, so adding one is just dropping a file in.
+const files = import.meta.glob('../assets/fun/*.{png,jpg,webp}', { eager: true });
+const img = (name) => files[`../assets/fun/${name}`].default;
+
+// Figma's five-slot block (flowers, ring grid, mass video, frog, monkeys).
+const slots = {
+  flowers: { src: img('flowers.png'), alt: 'Grid of nine cartoon flowers with googly eyes on a lavender background.' },
+  rings: { src: img('ring-grid.png'), alt: 'Grid of colorful concentric rings on black.' },
+  frog: { src: img('frog.png'), alt: 'Pixel-style illustration of a green frog standing next to a white house with a pink roof.' },
+  monkeys: { src: img('monkeys.png'), alt: 'Strip of illustrated monkeys walking on a pink background.' },
+};
+
+// Everything else flows in the masonry grid below, in this order.
+const grid = [
+  ['Tutor-Nashville.jpg', 'Tutor Nashville logo: an open book character with eyes and a blue nose.'],
+  ['strawberries.png', 'Dithered blue grid of strawberry and heart shapes.'],
+  ['sunburst.webp', 'Yellow sunburst of thin rays on white.'],
+  ['mondrian.webp', 'Mondrian-style composition of black lines with red, blue and yellow blocks.'],
+];
 ---
-<Base title="Fun · Alison Zou">
-  <main class="stub">fun: placeholder, built in a later step</main>
+<Base title="Fun · Alison Zou" description="Paintings, graphics, and code experiments by Alison Zou.">
+  <main class="fun">
+    <section class="slots" aria-label="Featured work">
+      <div class="slots__left">
+        <div class="slots__pair">
+          <Image src={slots.flowers.src} alt={slots.flowers.alt} widths={[265, 530]} sizes="(min-width: 900px) 22vw, 50vw" format="webp" loading="eager" />
+          <Image src={slots.rings.src} alt={slots.rings.alt} widths={[265, 530]} sizes="(min-width: 900px) 22vw, 50vw" format="webp" loading="eager" />
+        </div>
+        <Image class="slots__frog" src={slots.frog.src} alt={slots.frog.alt} widths={[550, 1100]} sizes="(min-width: 900px) 43vw, 100vw" format="webp" loading="eager" />
+      </div>
+      <div class="slots__right">
+        <video class="slots__mass" autoplay muted loop playsinline preload="metadata" poster="/fun/mass-poster.jpg" aria-label="Looping animation of rows of purple silhouettes, each looking at a phone that beams a yellow light where the face would be.">
+          <source src="/fun/mass.webm" type="video/webm" />
+          <source src="/fun/mass.mp4" type="video/mp4" />
+        </video>
+        <Image class="slots__monkeys" src={slots.monkeys.src} alt={slots.monkeys.alt} widths={[648, 1296]} sizes="(min-width: 900px) 51vw, 100vw" format="webp" loading="eager" />
+      </div>
+    </section>
+
+    <section class="masonry" aria-label="More work">
+      {grid.map(([name, alt]) => (
+        <div class="masonry__item">
+          <Image src={img(name)} alt={alt} widths={[400, 800]} sizes="(min-width: 900px) 33vw, 50vw" format="webp" quality={82} loading="lazy" />
+        </div>
+      ))}
+    </section>
+  </main>
+
+  <script>
+    // Respect reduced motion: show the poster frame instead of autoplaying.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('video').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+    }
+  </script>
 </Base>
+
+<style>
+  .fun { max-width: var(--page-max); margin: 0 auto; padding: 33px 16px 80px; }
+  .slots { display: flex; gap: 20px; align-items: flex-start; }
+  .slots__left { flex: 550 1 0; display: flex; flex-direction: column; gap: 21px; min-width: 0; }
+  .slots__right { flex: 648 1 0; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .slots__pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .slots :global(img) { width: 100%; height: auto; }
+  .slots__pair :global(img) { aspect-ratio: 1; object-fit: cover; }
+  .slots__frog { aspect-ratio: 550 / 359; object-fit: cover; }
+
+  .masonry { columns: 3; column-gap: 20px; margin-top: 40px; }
+  .masonry__item { break-inside: avoid; margin: 0 0 20px; }
+  .masonry__item :global(img) { width: 100%; height: auto; display: block; }
+  .slots__mass { width: 100%; aspect-ratio: 648 / 422; object-fit: cover; display: block; }
+
+  @media (max-width: 900px) {
+    .fun { padding: 20px 12px 60px; }
+    .slots { flex-direction: column; }
+    .slots__left, .slots__right { flex: none; width: 100%; }
+    .masonry { columns: 2; column-gap: 12px; }
+    .masonry__item { margin-bottom: 12px; }
+  }
+</style>
