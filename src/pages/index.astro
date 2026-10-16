@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import AsciiCam from '../components/AsciiCam.astro';
 import CaseCard from '../components/CaseCard.astro';
+import Ticker from '../components/Ticker.astro';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -18,6 +19,13 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
         </div>
       </div>
     </section>
+
+    <Ticker text="please scroll down to see my work hehehe (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ " 
+            small="(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧"
+            gap={2} 
+            size={60} 
+            speed={0.5} 
+    />
 
     <section class="projects" aria-label="Projects">
       <div class="projects__grid">
@@ -44,7 +52,7 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 21px;
     max-width: var(--page-max);
-    margin: 200px auto 60px;
+    margin: 50px auto 60px;
     padding: 0 30px;
   }
 

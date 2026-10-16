@@ -1,39 +1,72 @@
 ---
-// Pure-CSS marquee. Two identical groups scroll left in lockstep, so the loop is
-// seamless and needs no JavaScript. Text and speed come from the original site.
-const unit = 'Alison Zou circa 2005 ';
-const text = unit.repeat(8);
+const {
+  text: phrase = 'Alison Zou circa 2005',
+  size = 70,
+  speed = 1,
+  gap = 1,
+  small = '',
+  dark = false,
+} = Astro.props;
+
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+// Wrap the chosen part (the emoji) in a span so it can be styled smaller.
+const phraseHtml =
+  small && phrase.includes(small)
+    ? esc(phrase).replace(esc(small), `<span class="ticker__small">${esc(small)}</span>`)
+    : esc(phrase);
+
+const minChars = Math.ceil(12320 / size);
+const repeats = Math.max(8, Math.ceil(minChars / (phrase.length + gap)));
+const html = (phraseHtml + ' '.repeat(gap)).repeat(repeats);
+const duration = ((phrase.length + gap) * repeats * size * 0.001943) / speed;
 ---
-<div class="ticker" aria-hidden="true">
-  <div class="ticker__track">{text}</div>
-  <div class="ticker__track">{text}</div>
+
+<div
+  class={dark ? 'ticker ticker--dark' : 'ticker'}
+  style={`--ticker-size: ${size}px; --ticker-duration: ${duration}s`}
+  aria-hidden="true"
+>
+  <div class="ticker__track" set:html={html}></div>
+  <div class="ticker__track" set:html={html}></div>
 </div>
 
 <style>
   .ticker {
+    --fs: min(var(--ticker-size, 999px), var(--fs-ticker));
     display: flex;
-    height: var(--ticker-h);
+    height: calc(var(--fs) * 1.214);
     overflow: hidden;
     background: var(--paper);
+    color: var(--ink);
     white-space: pre;
     font-family: var(--font-serif);
-    font-size: var(--fs-ticker);
+    font-size: var(--fs);
     line-height: 0.943;
     letter-spacing: -0.03em;
     word-spacing: 0.5px;
-    padding-top: calc(var(--ticker-h) * 0.106);
+    padding-top: calc(var(--fs) * 0.129);
+  }
+
+  .ticker--dark {
+    background: #000;
+    color: #fff;
   }
 
   .ticker__track {
-    flex: 0 0 auto;
-    padding-left: 8px;
-    animation: ticker-scroll 24s linear infinite;
-    will-change: transform;
+    flex: none;
+    animation: ticker-scroll var(--ticker-duration, 24s) linear infinite;
+  }
+
+  /* :global is needed because set:html content doesn't get Astro's scope attribute */
+  .ticker :global(.ticker__small) {
+    font-size: 0.6em;
+    vertical-align: 0.15em;
   }
 
   @keyframes ticker-scroll {
     from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
+    to   { transform: translateX(-100%); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -41,9 +74,6 @@ const text = unit.repeat(8);
   }
 
   @media (max-width: 900px) {
-    .ticker {
-      --ticker-h: 56px;
-      --fs-ticker: 46px;
-    }
+    .ticker { --fs-ticker: 46px; }
   }
 </style>
