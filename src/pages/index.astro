@@ -1,27 +1,54 @@
 ---
 import Base from '../layouts/Base.astro';
 import AsciiCam from '../components/AsciiCam.astro';
+import CaseCard from '../components/CaseCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
 <Base>
   <main class="home">
     <section class="hero">
-      <div class="hero__cam"><AsciiCam /></div>
+      <div class="hero__inner">
+        <div class="hero__cam"><AsciiCam /></div>
 
-      <div class="hero__text">
-        <h1 class="hero__title">I create for humans</h1>
-        <p class="hero__lead">Alison is a software engineer and designer that loves creating for humans.</p>
+        <div class="hero__text">
+          <h1 class="hero__title">I create for humans</h1>
+          <p class="hero__lead">Alison is a software engineer and designer that loves creating for humans.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" aria-label="Projects">
+      <div class="projects__grid">
+        {projects.map((p) => <CaseCard slug={p.id} data={p.data} />)}
       </div>
     </section>
   </main>
 </Base>
 
 <style>
+  /* Full-bleed black band; the inner wrapper keeps content at the page width. */
   .hero {
+    background: #000;
+    color: var(--paper);
+  }
+
+  .hero__inner {
     display: grid;
     grid-template-columns: 44% minmax(0, 1fr);
     max-width: var(--page-max);
     margin: 0 auto;
     height: 635px;
+  }
+
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 21px;
+    max-width: var(--page-max);
+    margin: 27px auto 60px;
+    padding: 0 30px;
   }
 
   .hero__cam { overflow: hidden; }
@@ -49,10 +76,11 @@ import AsciiCam from '../components/AsciiCam.astro';
 
   /* Provisional stacked layout until a mobile design exists. */
   @media (max-width: 900px) {
-    .hero {
+    .hero__inner {
       display: block;
       height: auto;
     }
+    .projects__grid { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; padding: 0 14px; }
     .hero__cam { height: 72vw; }
     .hero__text { padding: 28px 20px 48px; }
     .hero__title { font-size: clamp(40px, 11vw, 70px); }
