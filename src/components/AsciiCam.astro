@@ -1,0 +1,92 @@
+---
+// Camera rendered as the letters of "who am i?" (the old landing sketch).
+// Darker pixels pick later letters, bright pixels are blank. Falls back to an
+// animated pattern when there is no camera or access is denied.
+---
+<div class="ascii" data-ascii>
+  <canvas role="img" aria-label="Live view of your camera drawn with the letters of the phrase who am i, or an animated pattern if the camera is off."></canvas>
+  <p class="ascii__note" hidden>camera off</p>
+</div>
+
+<script>
+  const root = document.querySelector('[data-ascii]');
+  const canvas = root.querySelector('canvas');
+  const note = root.querySelector('.ascii__note');
+  const ctx = canvas.getContext('2d');
+  const chars = 'who am i?';
+  const COLS = 64;
+  const pink = getComputedStyle(document.documentElement).getPropertyValue('--pink').trim() || '#ff69d2';
+  const mono = getComputedStyle(document.documentElement).getPropertyValue('--font-mono').trim() || 'monospace';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const src = document.createElement('canvas');
+  const sctx = src.getContext('2d', { willReadFrequently: true });
+  let cols = COLS, rows = 48, cell = 10, dpr = 1;
+  let video = null;
+
+  function resize() {
+    const box = root.getBoundingClientRect();
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.round(box.width * dpr);
+    canvas.height = Math.round(box.height * dpr);
+    cell = box.width / COLS;
+    cols = COLS;
+    rows = Math.max(1, Math.round(box.height / cell));
+    src.width = cols; src.height = rows;
+  }
+  new ResizeObserver(resize).observe(root);
+  resize();
+
+  // Draw the source cover-fit (crop, never stretch) into the small grid.
+  function paintVideo() {
+    const vw = video.videoWidth, vh = video.videoHeight;
+    const s = Math.max(cols / vw, rows / vh);
+    const dw = vw * s, dh = vh * s;
+    sctx.drawImage(video, (cols - dw) / 2, (rows - dh) / 2, dw, dh);
+  }
+  function paintFallback(t) {
+    const g = sctx.createRadialGradient(cols * (0.5 + 0.28 * Math.cos(t / 1700)), rows * (0.5 + 0.28 * Math.sin(t / 1300)), 2, cols / 2, rows / 2, cols * 0.55);
+    g.addColorStop(0, '#fff'); g.addColorStop(1, '#000');
+    sctx.fillStyle = g; sctx.fillRect(0, 0, cols, rows);
+  }
+
+  function frame(t) {
+    if (video && video.readyState >= 2) paintVideo(); else paintFallback(reduce ? 0 : t);
+    const px = sctx.getImageData(0, 0, cols, rows).data;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+    ctx.fillStyle = pink;
+    ctx.font = `${cell}px ${mono}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) {
+      const k = (i + j * cols) * 4;
+      const c = (px[k] + px[k + 1] + px[k + 2]) / 3;
+      // 0..120 maps across the letters; brighter than that is blank (as in the original).
+      const ch = chars.charAt(Math.floor((c / 120) * chars.length));
+      if (ch) ctx.fillText(ch, i * cell + cell / 2, j * cell + cell / 2);
+    }
+    if (video || !reduce) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  if (navigator.mediaDevices?.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 }, audio: false })
+      .then((stream) => {
+        video = document.createElement('video');
+        video.srcObject = stream; video.muted = true; video.playsInline = true;
+        video.play();
+        if (reduce) requestAnimationFrame(frame);
+      })
+      .catch(() => { note.hidden = false; });
+  } else {
+    note.hidden = false;
+  }
+</script>
+
+<style>
+  .ascii { position: relative; width: 100%; height: 100%; background: #000; }
+  canvas { width: 100%; height: 100%; display: block; }
+  .ascii__note { position: absolute; left: 14px; bottom: 12px; margin: 0; font: var(--fs-tiny) var(--font-mono); color: var(--pink); }
+</style>

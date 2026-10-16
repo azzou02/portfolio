@@ -1,23 +1,15 @@
 ---
-import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import booth from '../assets/home/booth.png';
+import AsciiCam from '../components/AsciiCam.astro';
 ---
 <Base>
   <main class="home">
     <section class="hero">
-      <div class="hero__photo">
-        <Image src={booth} alt="A silver photo booth with a row of black stars down its right side and the text “booth by bryant” on the front." widths={[366, 732]} sizes="366px" format="png" loading="eager" />
-      </div>
+      <div class="hero__cam"><AsciiCam /></div>
 
       <div class="hero__text">
         <h1 class="hero__title">I create for humans</h1>
         <p class="hero__lead">Alison is a software engineer and designer that loves creating for humans.</p>
-        <div class="swatches" aria-hidden="true">
-          <span style="background: var(--pink)"></span>
-          <span style="background: var(--yellow)"></span>
-          <span style="background: var(--blue)"></span>
-        </div>
       </div>
     </section>
   </main>
@@ -26,22 +18,16 @@ import booth from '../assets/home/booth.png';
 <style>
   .hero {
     display: grid;
-    grid-template-columns: 366px minmax(0, 689px);
-    column-gap: 75px;
+    grid-template-columns: 44% minmax(0, 1fr);
     max-width: var(--page-max);
     margin: 0 auto;
-    padding: 103px 0 0 89px;
     height: 635px;
-    align-items: start;
   }
 
-  .hero__photo img {
-    width: 366px;
-    height: auto;
-  }
+  .hero__cam { overflow: hidden; }
 
   .hero__text {
-    margin-top: 29px;
+    padding: 132px 24px 0 48px;
   }
 
   .hero__title {
@@ -61,29 +47,15 @@ import booth from '../assets/home/booth.png';
     letter-spacing: -0.03em;
   }
 
-  .swatches {
-    display: flex;
-    gap: 14px;
-    margin-top: 191px;
-  }
-
-  .swatches span {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-  }
-
   /* Provisional stacked layout until a mobile design exists. */
   @media (max-width: 900px) {
     .hero {
       display: block;
       height: auto;
-      padding: 32px 20px 48px;
     }
-    .hero__photo img { width: min(366px, 80%); }
-    .hero__text { margin-top: 28px; }
+    .hero__cam { height: 72vw; }
+    .hero__text { padding: 28px 20px 48px; }
     .hero__title { font-size: clamp(40px, 11vw, 70px); }
     .hero__lead { font-size: clamp(24px, 6.5vw, 40px); margin-top: 8px; }
-    .swatches { margin-top: 32px; }
   }
 </style>
