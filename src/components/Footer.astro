@@ -1,7 +1,8 @@
 ---
+const { dark = false } = Astro.props;
 const year = 2026;
 ---
-<footer class="footer">
+<footer class={dark ? 'footer footer--dark' : 'footer'}>
   <div>@alison zou {year}</div>
   <div>
     <a href="https://www.linkedin.com/in/alison-zou/" target="_blank" rel="noopener">linkedin</a>{' | '}<a href="mailto:alisonzbb@gmail.com">email</a>
@@ -18,6 +19,12 @@ const year = 2026;
     border-top: 1px solid var(--ink);
     font-family: var(--font-mono);
     font-size: var(--fs-label);
+  }
+
+  .footer--dark {
+    background: #000;
+    color: var(--paper);
+    border-top-color: var(--paper);
   }
 
   .footer a:hover {

@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base>
+<Base darkFooter>
   <main class="home">
     <section class="hero">
       <div class="hero__inner">
@@ -21,6 +21,7 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
 
     <section class="projects" aria-label="Projects">
       <div class="projects__grid">
+        <p class="landing__text">projects</p>
         {projects.map((p) => <CaseCard slug={p.id} data={p.data} />)}
       </div>
     </section>
@@ -28,11 +29,7 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
 </Base>
 
 <style>
-  /* Full-bleed black band; the inner wrapper keeps content at the page width. */
-  .hero {
-    background: #000;
-    color: var(--paper);
-  }
+  :global(body) { background: #000; }
 
   .hero__inner {
     display: grid;
@@ -47,14 +44,18 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 21px;
     max-width: var(--page-max);
-    margin: 27px auto 60px;
+    margin: 200px auto 60px;
     padding: 0 30px;
   }
 
   .hero__cam { overflow: hidden; }
 
   .hero__text {
-    padding: 132px 24px 0 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 24px 56px 48px;
+    color: var(--paper);
   }
 
   .hero__title {
@@ -72,6 +73,12 @@ const projects = (await getCollection('work')).sort((a, b) => a.data.order - b.d
     font-size: var(--fs-home-lead);
     line-height: 1;
     letter-spacing: -0.03em;
+  }
+
+  .landing__text {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--paper);
   }
 
   /* Provisional stacked layout until a mobile design exists. */

@@ -12,10 +12,12 @@ interface Props {
   title?: string;
   description?: string;
   chrome?: boolean; // false hides ticker + nav (case studies)
+  darkFooter?: boolean;
 }
 
 const {
   chrome = true,
+  darkFooter = false,
   title = 'Alison Zou',
   description = 'Portfolio of Alison Zou, a software engineer and designer who loves creating for humans.',
 } = Astro.props;
@@ -42,6 +44,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     {chrome && <Ticker />}
     {chrome && <Nav />}
     <slot />
-    <Footer />
+    <Footer dark={darkFooter} />
   </body>
 </html>
