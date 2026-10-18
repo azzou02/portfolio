@@ -31,6 +31,7 @@ import Fig from '../../components/case/Fig.astro';
 import Placeholder from '../../components/case/Placeholder.astro';
 import guide from '../../assets/dayton/guide.png';
 import onboarding from '../../assets/dayton/onboarding.png';
+import onboardingFlow from '../../assets/dayton/onboarding-flow.png';
 import transit from '../../assets/dayton/transit.png';
 
 <Section id="introduction" label="Introduction">
@@ -155,7 +156,7 @@ Print is part of Dayton's identity, and the growth was in people DDN wasn't reac
 
 A Select Interests screen personalizes the feed after sign-up, with a Skip option so it never blocks entry. Social sign-in (Google, Apple, Facebook) keeps registration short.
 
-<Placeholder label="diagram - onboarding flow" />
+<Fig src={onboardingFlow} alt="Onboarding flow diagram: Step 0 Sign in, Step 1 Login or Register with social sign-in (Google, Apple, Facebook), Step 2 Select Interests with an option to skip that never blocks entry, then Step 3 News feed." width={1000} />
 
 <Fig src={onboarding} alt="Four onboarding screens: continue with email or social sign-in, create account, log in, and Select Interests with a Skip option." tone="blue" />
 
