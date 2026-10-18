@@ -14,14 +14,15 @@
   const note = root.querySelector('.ascii__note');
   const ctx = canvas.getContext('2d');
   const chars = 'who am i?';
-  const COLS = 64;
+  // Target letter size in px. Bigger number = bigger letters and fewer of them.
+  const CELL_DESKTOP = 10, CELL_MOBILE = 6;
   const pink = getComputedStyle(document.documentElement).getPropertyValue('--pink').trim() || '#ff69d2';
   const mono = getComputedStyle(document.documentElement).getPropertyValue('--font-mono').trim() || 'monospace';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const src = document.createElement('canvas');
   const sctx = src.getContext('2d', { willReadFrequently: true });
-  let cols = COLS, rows = 48, cell = 10, dpr = 1;
+  let cols = 64, rows = 48, cell = 10, dpr = 1;
   let video = null;
 
   function resize() {
@@ -29,8 +30,9 @@
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(box.width * dpr);
     canvas.height = Math.round(box.height * dpr);
-    cell = box.width / COLS;
-    cols = COLS;
+    const target = innerWidth <= 900 ? CELL_MOBILE : CELL_DESKTOP;
+    cols = Math.max(1, Math.round(box.width / target));
+    cell = box.width / cols;
     rows = Math.max(1, Math.round(box.height / cell));
     src.width = cols; src.height = rows;
   }
