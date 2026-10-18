@@ -26,7 +26,15 @@ meta:
   - { label: Tools, lines: ['Figma'] }
 ---
 import Section from '../../components/case/Section.astro';
-import Placeholder from '../../components/case/Placeholder.astro';
+import Fig from '../../components/case/Fig.astro';
+import Phones from '../../components/case/Phones.astro';
+import flow from '../../assets/uvo/flow.png';
+import home from '../../assets/uvo/phone-home.png';
+import resources from '../../assets/uvo/phone-resources.png';
+import resourcePage from '../../assets/uvo/phone-resource-page.png';
+import consultants from '../../assets/uvo/phone-consultants.png';
+import consultantPage from '../../assets/uvo/phone-consultant-page.png';
+import requestSent from '../../assets/uvo/phone-request-sent.png';
 
 <Section id="introduction" label="Introduction">
 
@@ -59,7 +67,7 @@ I was the designer. I created every screen and the clickable prototype in Figma,
 
 <Section id="design" label="Design - screens and flow" title="Every section starts from the home screen">
 
-<Placeholder label="diagram - app flow: home, 4 sections, 2 contact paths" />
+<Fig src={flow} alt="App flow diagram: Home leads to Resources then a Resource page; Consultants then a Consultant page then Request sent; Volunteers then a Volunteer page then Request sent; and More info. A floating bottom nav bar links the four sections on list screens; detail screens use a Back button." width={1000} />
 
 Resources lead to a detail page, and consultants and volunteers lead to a profile with a Request Contact button and a confirmation screen.
 
@@ -70,7 +78,14 @@ Resources lead to a detail page, and consultants and volunteers lead to a profil
   <li class="cs-card"><h4>Request contact</h4><p>The confirmation screen tells the person someone will reach out and points them to more resources.</p></li>
 </ul>
 
-<Placeholder label="screens - Home, Resources, Resource page, Consultants, Consultant page, Request sent" />
+<Phones items={[
+  { src: home, alt: 'Home screen with the UVO logo, a hero image with the slogan, four tiles (Resources, Consultants, Volunteers, More Info) and a floating nav bar.' },
+  { src: resources, alt: 'Resources list with organization cards, each with a title, summary and logo.' },
+  { src: resourcePage, alt: 'Resource page with a description, three color-coded FAQ accordions in blue, yellow and pink, contact details and a Back button.' },
+  { src: consultants, alt: 'Consultants list with profile cards and a collapsible Role Description.' },
+  { src: consultantPage, alt: 'Consultant profile with photo, a Request Contact button, bio and specializations.' },
+  { src: requestSent, alt: 'Request sent confirmation with the UVO logo, a thank-you message and a Back button.' },
+]} />
 
 <h3 class="cs-h3">Why I made these choices</h3>
 
