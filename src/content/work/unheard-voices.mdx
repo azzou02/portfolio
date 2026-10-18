@@ -1,0 +1,132 @@
+---
+title: Designing a reentry resource app for Unheard Voices Outreach
+cardTitle: Unheard Voices Outreach
+cardTags: [app design, prototyping, Figma]
+year: '2026'
+order: 3
+cover: ../../assets/uvo/hero.png
+coverPosition: 50% 50%
+heroAlt: Mobile app screens for Unheard Voices Outreach, a reentry resource app designed in Figma.
+pills:
+  - { label: Got the role, dot: true }
+  - { label: Change++ application }
+  - { label: Mobile }
+toc:
+  - { id: introduction, label: Introduction }
+  - { id: brief, label: The brief }
+  - { id: my-role, label: My role }
+  - { id: design, label: Screens + flow }
+  - { id: components, label: Components }
+  - { id: outcome, label: Outcome }
+  - { id: reflection, label: Reflection }
+meta:
+  - { label: Timeline, lines: ['A few days'] }
+  - { label: My Role, lines: ['Designer'] }
+  - { label: Team, lines: ['Alison Zou (me!)'] }
+  - { label: Tools, lines: ['Figma'] }
+---
+import Section from '../../components/case/Section.astro';
+import Placeholder from '../../components/case/Placeholder.astro';
+
+<Section id="introduction" label="Introduction">
+
+I designed a mobile app in Figma that connects people leaving incarceration with reentry resources, consultants, and volunteers for Unheard Voices Outreach (UVO). I made it as part of my application to be a designer for Change++, and I got the role. It was my first app design project: the same brief was assigned to several people, and each of us made our own design.
+
+<p class="cs-note">Student concept for a real nonprofit's brief; not affiliated with or endorsed by Unheard Voices Outreach. Photos and people are placeholders.</p>
+
+<dl class="cs-meta">
+  <div><dt>Timeline</dt><dd>A few days</dd></div>
+  <div><dt>My Role</dt><dd>Designer</dd></div>
+  <div><dt>Team</dt><dd>Alison Zou (me!)</dd></div>
+  <div><dt>Tools</dt><dd>Figma</dd></div>
+  <div><dt>Deliverable</dt><dd>High-fidelity mobile screens and a clickable prototype</dd></div>
+</dl>
+
+
+</Section>
+
+<Section id="brief" label="The brief" title="Help people returning home find support">
+
+UVO is a nonprofit that supports formerly incarcerated people as they return to their communities. The app needed to help them find reentry resources such as housing, employment, and mental health support, and let them reach consultants and volunteers who could help. I made this as part of my application to be a designer for Change++. The VP of design gave us the specs.
+
+</Section>
+
+<Section id="my-role" label="My role" title="Every screen, the prototype, and the components">
+
+I was the designer. I created every screen and the clickable prototype in Figma, along with a small set of reusable components. It took me a few days.
+
+</Section>
+
+<Section id="design" label="Design - screens and flow" title="Every section starts from the home screen">
+
+<Placeholder label="diagram - app flow: home, 4 sections, 2 contact paths" />
+
+Resources lead to a detail page, and consultants and volunteers lead to a profile with a Request Contact button and a confirmation screen.
+
+<ul class="cs-cards cols-2">
+  <li class="cs-card"><h4>Home</h4><p>Four large tiles (Resources, Consultants, Volunteers, More Info) under a hero image carrying UVO's slogan.</p></li>
+  <li class="cs-card"><h4>Cards with accordions</h4><p>Each consultant and volunteer card has a collapsible Role Description, which keeps the list short.</p></li>
+  <li class="cs-card"><h4>Resource pages</h4><p>FAQs are color-coded accordions (blue, yellow, pink), followed by contact details and a Back button.</p></li>
+  <li class="cs-card"><h4>Request contact</h4><p>The confirmation screen tells the person someone will reach out and points them to more resources.</p></li>
+</ul>
+
+<Placeholder label="screens - Home, Resources, Resource page, Consultants, Consultant page, Request sent" />
+
+<h3 class="cs-h3">Why I made these choices</h3>
+
+<ul class="cs-cards">
+  <li class="cs-card"><h4>Large tiles</h4><p>Easy access to the main sections.</p></li>
+  <li class="cs-card"><h4>Accordions</h4><p>People can keep open the cards they want details on and close the ones they don't.</p></li>
+  <li class="cs-card"><h4>Color</h4><p>Differentiates items, adds variety, and helps accessibility.</p></li>
+</ul>
+
+A floating nav bar was an aesthetic choice.
+
+</Section>
+
+<Section id="components" label="Design - reusable components" title="A small set of pieces that behave the same everywhere">
+
+I built the interface from a small set of reusable Figma components, so the same pieces behave the same way on every screen.
+
+<table class="cs-table">
+  <thead><tr><th>Component</th><th>Variants</th></tr></thead>
+  <tbody>
+    <tr><td>Buttons</td><td>Primary, Secondary, and Tertiary, each with a pressed state</td></tr>
+    <tr><td>Accordion</td><td>Collapsed and expanded</td></tr>
+    <tr><td>Floating nav bar</td><td>One variant per active section</td></tr>
+    <tr><td>Type scale</td><td>Headline 0–4 and Body 1–3, each with a bold style</td></tr>
+    <tr><td>Arrow icons</td><td>Left, right, and down, in light and dark</td></tr>
+  </tbody>
+</table>
+
+</Section>
+
+<Section id="outcome" label="Outcome">
+
+<div class="cs-outcome">
+  <div><strong>Hired</strong><span>as a Change++ designer</span></div>
+  <p>I got the designer role at Change++.</p>
+</div>
+
+</Section>
+
+<Section id="reflection" label="Reflection" title="What I learned">
+
+This was my first Figma and app design project, so most of what I learned was the craft of turning a written brief into a working prototype.
+
+<ol class="cs-list">
+  <li><span class="n">01</span><div><h4>Structure first</h4><p>Mapping which screens link to which, before polishing any of them, made the prototype easier to build.</p></div></li>
+  <li><span class="n">02</span><div><h4>Components save time</h4><p>Building buttons and accordions once, with their pressed and expanded states, kept screens consistent.</p></div></li>
+  <li><span class="n">03</span><div><h4>States matter</h4><p>A screen is not finished until you've designed what happens when someone taps, expands, or confirms.</p></div></li>
+</ol>
+
+<h3 class="cs-h3">What I'd do differently</h3>
+
+<ol class="cs-list">
+  <li><span class="n">01</span><div><h4>Talk to the people the app is for</h4><p>I designed from the brief without interviewing formerly incarcerated people or reentry workers. I'd interview a few before drawing screens.</p></div></li>
+  <li><span class="n">02</span><div><h4>Replace placeholders with real content</h4><p>The resource cards, consultant bios, and photos are stand-ins. With real UVO resources, I'd check that the cards and FAQs still scale.</p></div></li>
+  <li><span class="n">03</span><div><h4>Check accessibility</h4><p>I'd test the contrast of the white slogan over the hero image and add labels for screen readers.</p></div></li>
+  <li><span class="n">04</span><div><h4>Follow up on Request Contact</h4><p>The confirmation screen says someone will reach out, but I didn't design what the person sees after that.</p></div></li>
+</ol>
+
+</Section>
